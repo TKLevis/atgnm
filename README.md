@@ -1,3 +1,26 @@
+# Lerneinheit zum Relief 4 des Adam Kraft Kreuzweges in Nürnberg (Kurs: AtGNM, Gruppe A)
+
+Geplante Fragen:
+1. Frageseite: Schätze das Alter des Reliefs (mit Slider)
+  -> Infoseite (mit "Weiter" Button)
+2. Frageseite: Wie nennt man das markierte Objekt (Schweisstuch markieren, multiple choice (4 Buttons))
+  -> Infoseite (mit "Weiter" Button)
+3. Frageseite: Wofür steht der Name Vera Ikon? (Multiple choice(4 Buttons))
+  -> Infoseite (mit "Weiter" Button)
+4. Frageseite: Welchen Bezug zu einem anderen Element der Szene hat der Name "Vera Ikon" (Multiple choice(4 Buttons))
+  -> Infoseite (mit "Weiter" Button)
+5. Frageseite: Wieviele Köpfe zählst du im Relief? (Inputfeld)
+  -> Alle Köpfe markieren, Infoseite (mit "Weiter" Button)
+6. Frageseite: Um was handelt es sich bei den seltsamen Erhebungen an der Rückwand des Reliefs? (Markierung der Rückwand, Multiple Choice (4 Buttons)
+  -> Infoseite (Hier schon Bild einblenden?, mit "Weiter" Button)
+7. Frageseite: Wieviele Köpfe siehst du in der rekonstruierten Version? (Bild einblenden, Inputfeld)
+  -> Infoseite (mit "Weiter" Button)
+8. Frageseite: Schau dir die Inschrift an, und versuche sie in modernes Deutsch zu transkribieren (Bild einblenden, Lückentext mit dropdown-menüs)
+  -> Infoseite (mit "Weiter" Button)
+
+9. Eventuell Background-Infos zum Projekt / Photogrammetry / DH-Aspekte...
+
+
 ## Zum Thema Deployment of react-app on Github Pages:
 https://github.com/gitname/react-gh-pages
 
