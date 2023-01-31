@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/atgnm/static/css/main.3b965118.css",
+    "main.js": "/atgnm/static/js/main.ec8bbeb6.js",
+    "index.html": "/atgnm/index.html",
+    "main.3b965118.css.map": "/atgnm/static/css/main.3b965118.css.map",
+    "main.ec8bbeb6.js.map": "/atgnm/static/js/main.ec8bbeb6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3b965118.css",
+    "static/js/main.ec8bbeb6.js"
+  ]
+}
