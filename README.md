@@ -1,4 +1,4 @@
-##Zum Thema Deployment of react-app on Github Pages:
+## Zum Thema Deployment of react-app on Github Pages:
 https://github.com/gitname/react-gh-pages
 
 
