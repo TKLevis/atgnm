@@ -1,0 +1,41 @@
+{
+    "fragen": [
+        {
+            "type": "form",
+            "frage": "Wer ist die markierte Person?",
+            "richtigeAntworten": ["Jesus", "Christus", "jesus", "christus"]
+            
+        },
+        {
+            "type": "form",
+            "frage": "Wann wurde die Person geboren?",
+            "richtigeAntworten": ["0", "Null", "null", "vor 2023 Jahren"]
+        },
+        {
+            "type": "select",
+            "frage": "Selektiere das Schweißtuch der heiligen Veronika",
+            "richtigeAntworten": ["nodes.Model_2.geometry", "Tuch"]
+        },
+        {
+            "type": "form",
+            "frage": "Von wem wurde das Relief hergestellt?",
+            "richtigeAntworten": ["Adam Kraft"]
+        },
+        {
+            "type": "choose",
+            "frage": "Wann wurde das Relief hergestellt?",
+            "richtigeAntworten": ["um 1487/90"]
+        },
+        {
+            "type": "choose",
+            "frage": "Aus welchem Material besteht das Relief?",
+            "richtigeAntworten": ["Nürnberger Burgsandstein"]
+        },
+        {
+            "type": "choose",
+            "frage": "Übersetze die Inschrift in modernes Hochdeutsch",
+            "richtigeAntworten": ["Hier", "Hier hat Cristus sein heiligs Angesicht der heiligen Fraw Veronica auf iren Slayr gedruckt vor irem Haws Vc [500] Srytt von Pilatus Haws"]
+        }
+
+    ]
+}
