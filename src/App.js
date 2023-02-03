@@ -1,27 +1,17 @@
 import "./index.css";
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useState } from "react";
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
 import { useGLTF } from "@react-three/drei";
-import { Button, Col, Form } from "react-bootstrap";
+import { Button, Col} from "react-bootstrap";
 
 //RELIEF
 function Relief(props) {
   const { nodes, materials } = useGLTF("/ReliefGNM3.glb");
-  const [highlightTuch, setHighlightTuch] = [
-    props.highlightTuch,
-    props.setHighlightTuch,
-  ];
-  const [highlightJesus, setHighlightJesus] = [
-    props.highlightJesus,
-    props.setHighlightJesus,
-  ];
-  const [infoText, setInfoText] = [props.infoText, props.setInfoText];
-  const [canHighlight, setCanHighlight] = [
-    props.canHighlight,
-    props.setCanHighlight,
-  ];
+  const { highlightTuch, setHighlightTuch, highlightJesus, setHighlightJesus,
+    setInfoText, canHighlight } = props;
+
   var currentMatTuch = materials.material0;
   var currentMatJesus = materials.material0;
 
@@ -46,9 +36,9 @@ function Relief(props) {
           material={materials.material0}
         ></mesh>
         <mesh
-          onPointerEnter={(e) => setHighlightTuch(true)}
-          onPointerLeave={(e) => setHighlightTuch(false)}
-          onClick={(e) => {
+          onPointerEnter={() => setHighlightTuch(true)}
+          onPointerLeave={() => setHighlightTuch(false)}
+          onClick={() => {
             setInfoText(
               "Das Schweisstuch, in das sich das Gesicht Jesu eingedrückt hat. Vera Ikon."
             );
@@ -57,9 +47,9 @@ function Relief(props) {
           material={currentMatTuch}
         ></mesh>
         <mesh
-          onPointerEnter={(e) => setHighlightJesus(true)}
-          onPointerLeave={(e) => setHighlightJesus(false)}
-          onClick={(e) =>
+          onPointerEnter={() => setHighlightJesus(true)}
+          onPointerLeave={() => setHighlightJesus(false)}
+          onClick={() =>
             setInfoText(
               "Dies ist Jesus. Er wurde vor 2000 Jahren geboren und wird von manchen als der Messiahs angesehen. War sicher ein cooler Dude."
             )
@@ -100,6 +90,134 @@ function Relief(props) {
   );
 }
 
+// "inspired" from https://www.codevertiser.com/quiz-app-using-reactjs/
+function QuizUI(props) {
+  const { setHighlightTuch } = props;
+
+  const questions = [
+    {
+      question: 'Wann wurde das Relief erstellt?',
+      choices: ['1400', '1500', '1600', '1700'],
+      type: 'MCQ',
+      correctAnswer: 1,
+      info: 'Richtig! Es wurde in einem Jahr von einem Typen erstellt.',
+      preHook: null,
+    },
+    {
+      question: 'Wie nennt man das markierte Objekt?',
+      choices: ['Schweisstuch', 'Scheisstuch', 'ka'],
+      type: 'MCQ',
+      correctAnswer: 0,
+      info: 'info die nach der frage angezeigt wird',
+      preHook: () => {
+        // TODO set camera pos
+        setHighlightTuch(true);
+      },
+    },
+    {
+      question: 'Wofuer steht der Name Vera Ikon?',
+      choices: ['Schweisstuch', 'Scheisstuch', 'ka'],
+      type: 'MCQ',
+      correctAnswer: 0,
+      info: 'info die nach der frage angezeigt wird',
+      preHook: () => {
+        // unset because of previous question
+        setHighlightTuch(false);
+      },
+    },
+    {
+      question: 'Wie viele Koepfe siehst du in der rekonstruierten Version?',
+      choices: ['6', '7', '8', '9'],
+      type: 'MCQ',
+      correctAnswer: 0,
+      info: 'info die nach der frage angezeigt wird',
+      preHook: () => {
+        // TODO show picture
+      },
+    },
+  ];
+
+  const [activeQuestion, setActiveQuestion] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [badAnswer, setBadAnswer] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+
+  const { question, choices, type, correctAnswer, info, preHook } = questions[activeQuestion];
+
+  const onClickNext = () => {
+    if (selectedAnswer == correctAnswer) {
+      console.log('richtig');
+      if (showInfo) {
+        setSelectedAnswer(null);
+        setActiveQuestion((prev) => (prev + 1) % questions.length);
+        setShowInfo(false);
+      }
+      setShowInfo(!showInfo);
+      setBadAnswer(false);
+    } else {
+      console.log('falsch');
+      setBadAnswer(true);
+    }
+  };
+
+  const onAnswerSelected = (index) => {
+    setSelectedAnswer(index);
+  }
+
+  if (preHook != null) {
+    preHook();
+  }
+
+  return (
+    <div className="quiz-container">
+      <div>
+        <span className="active-question-no">
+          {activeQuestion + 1}
+        </span>
+        <span className="total-question">
+          /{questions.length}
+        </span>
+      </div>
+      <h2>{question}</h2>
+      {(() => {
+        switch (type) {
+          case 'MCQ':
+            return (
+              <ul>
+                {choices.map((answer, index) => (
+                  <li
+                    onClick={() => onAnswerSelected(index)}
+                    key={answer}
+                    className={
+                      selectedAnswer === index ? 'selected-answer' : null
+                    }>
+                    {answer}
+                  </li>
+                ))}
+              </ul>
+            )
+          case 'slider': // TODO this is shit?
+            return (
+              <input type="range" min="1" max="100" value="50" class="slider" id="myRange"/>
+                )
+        }
+      })()}
+      <div className="flex-right">
+        <button onClick={onClickNext} disabled={selectedAnswer === null}>
+          {!showInfo ? 'Stimmts?' : activeQuestion == questions.length - 1 ? 'Nochmal' : 'Weiter'}
+        </button>
+      </div>
+
+      {badAnswer && (<div>
+        Leider nicht richtig, versuche es nochmal!
+      </div>)}
+      {showInfo && (<div>
+        {info}
+      </div>)}
+    </div>
+  );
+}
+
 //TEXT UI unterhalb des 3D Modells | Unterteilt in 3 States die über Buttons geändert werden (Besser wären Radiobuttons)
 function TextUI(props) {
   const [lernState, setLernState] = [props.lernState, props.setLernState];
@@ -135,7 +253,7 @@ function TextUI(props) {
             <Button
               type="button"
               className="button1"
-              onClick={(e) => setLernState("Quizmodus")}
+              onClick={() => setLernState("Quizmodus")}
             >
               {" "}
               Quizmodus{" "}
@@ -143,7 +261,7 @@ function TextUI(props) {
             <Button
               type="button"
               className="button1"
-              onClick={(e) => setLernState("Anschaumodus")}
+              onClick={() => setLernState("Anschaumodus")}
             >
               {" "}
               Anschaumodus{" "}
@@ -175,7 +293,7 @@ function TextUI(props) {
             <Button
               className="button1"
               type="button"
-              onClick={(e) => {
+              onClick={() => {
                 setHighlightJesus(false);
                 setHighlightTuch(false);
                 setInfoText(
@@ -191,7 +309,7 @@ function TextUI(props) {
             <Button
               className="button1"
               type="button"
-              onClick={(e) => {
+              onClick={() => {
                 setLernState("Anschaumodus");
                 setQuestionCounter(0);
               }}
@@ -217,7 +335,7 @@ function TextUI(props) {
             <Button
               type="button"
               className="button1"
-              onClick={(e) => {
+              onClick={() => {
                 setHighlightJesus(false);
                 setHighlightTuch(false);
                 setInfoText(
@@ -232,7 +350,7 @@ function TextUI(props) {
             <Button
               type="button"
               className="button1"
-              onClick={(e) => setLernState("Quizmodus")}
+              onClick={() => setLernState("Quizmodus")}
             >
               {" "}
               Quizmodus{" "}
@@ -252,13 +370,12 @@ function InputField(props) {
   ];
   const [antwortText, setAntwortText] = useState("");
   const fragen = props.fragen.fragen;
-  const type = fragen[questionCounter].type;
   const frage = fragen[questionCounter].frage;
   const richtigeAntworten = fragen[questionCounter].richtigeAntworten;
 
   function handleAntwortChange(event) {
     console.log(this);
-    const { name, value } = event.target;
+    const { value } = event.target;
     setAntwortText(value);
   }
 
@@ -327,48 +444,33 @@ function App() {
   //Hier werden alle JSX-Elemente(ähnlich html) und Components(z.B. Relief und TextUI) zusammengeführt die in index.js gerendert werden
   // außerdem werden den child-components state & update-function als props gegeben
   return (
-    <div className="App">
-      <div className="wrapper">
-        <div className="card">
-          <div className="object-canvas">
-            <Suspense>
-              <Canvas>
-                <Environment preset="warehouse" background blur={0.6} />
-                <Relief
-                  infoText={infoText}
-                  setInfoText={setInfoText}
-                  canHighlight={canHighlight}
-                  setCanHighlight={setCanHighlight}
-                  highlightTuch={highlightTuch}
-                  setHighlightTuch={setHighlightTuch}
-                  highlightJesus={highlightJesus}
-                  setHighlightJesus={setHighlightJesus}
-                />
-                <OrbitControls
-                  enablePan={true}
-                  enableZoom={true}
-                  enableRotate={true}
-                />
-              </Canvas>
-            </Suspense>
-            <TextUI
-              questionCounter={questionCounter}
-              setQuestionCounter={setQuestionCounter}
-              fragen={fragen}
-              setFragen={setFragen}
-              infoText={infoText}
-              setInfoText={setInfoText}
-              lernState={lernState}
-              setLernState={setLernState}
-              canHighlight={canHighlight}
-              setCanHighlight={setCanHighlight}
-              highlightTuch={highlightTuch}
-              setHighlightTuch={setHighlightTuch}
-              highlightJesus={highlightJesus}
-              setHighlightJesus={setHighlightJesus}
-            />
-          </div>
+    <div className="wrapper">
+      <div className="card relief">
+          <Suspense>
+            <Canvas>
+              <Environment preset="warehouse" background blur={0.6} />
+              <Relief
+                infoText={infoText}
+                setInfoText={setInfoText}
+                canHighlight={canHighlight}
+                setCanHighlight={setCanHighlight}
+                highlightTuch={highlightTuch}
+                setHighlightTuch={setHighlightTuch}
+                highlightJesus={highlightJesus}
+                setHighlightJesus={setHighlightJesus}
+              />
+              <OrbitControls
+                enablePan={true}
+                enableZoom={true}
+                enableRotate={true}
+              />
+            </Canvas>
+          </Suspense>
         </div>
+      <div className="card quiz">
+        <QuizUI
+          setHighlightTuch={setHighlightTuch}
+        />
       </div>
     </div>
   );
