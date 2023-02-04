@@ -1,16 +1,19 @@
 import "./index.css";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
 import { useGLTF } from "@react-three/drei";
 import { Button, Col} from "react-bootstrap";
 
+import RekonstruktionFoto from './images/RekonstruktionFoto.jpg'
+import RekonstruktionFotoSchrift from './images/RekonstruktionFotoSchrift.jpg'
+
 //RELIEF
 function Relief(props) {
   const { nodes, materials } = useGLTF("/ReliefGNM3.glb");
   const { highlightTuch, setHighlightTuch, highlightJesus, setHighlightJesus,
-    setInfoText, canHighlight } = props;
+    setInfoText, canHighlight, cameraRotation } = props;
 
   var currentMatTuch = materials.material0;
   var currentMatJesus = materials.material0;
@@ -30,7 +33,7 @@ function Relief(props) {
 
   return (
     <group {...props} dispose={null}>
-      <group rotation={[2.4, -0.05, -0.05]}>
+      <group rotation={cameraRotation}>
         <mesh
           geometry={nodes.Model_1.geometry}
           material={materials.material0}
@@ -91,9 +94,7 @@ function Relief(props) {
 }
 
 // "inspired" from https://www.codevertiser.com/quiz-app-using-reactjs/
-function QuizUI(props) {
-  const { setHighlightTuch } = props;
-
+function QuizUI({ setHighlightTuch, setCameraRotation, setImage }) {
   const questions = [
     {
       question: 'Wann wurde das Relief erstellt?',
@@ -110,7 +111,8 @@ function QuizUI(props) {
       correctAnswer: 0,
       info: 'info die nach der frage angezeigt wird',
       preHook: () => {
-        // TODO set camera pos
+        // TODO set camera pos correctly. not sure if this is a good approach
+        setCameraRotation([3.4, -3.05, -0.05]);
         setHighlightTuch(true);
       },
     },
@@ -132,7 +134,7 @@ function QuizUI(props) {
       correctAnswer: 0,
       info: 'info die nach der frage angezeigt wird',
       preHook: () => {
-        // TODO show picture
+        setImage(RekonstruktionFoto);
       },
     },
   ];
@@ -145,8 +147,7 @@ function QuizUI(props) {
   const { question, choices, type, correctAnswer, info, preHook } = questions[activeQuestion];
 
   const onClickNext = () => {
-    if (selectedAnswer == correctAnswer) {
-      console.log('richtig');
+    if (selectedAnswer === correctAnswer) {
       if (showInfo) {
         setSelectedAnswer(null);
         setActiveQuestion((prev) => (prev + 1) % questions.length);
@@ -155,7 +156,6 @@ function QuizUI(props) {
       setShowInfo(!showInfo);
       setBadAnswer(false);
     } else {
-      console.log('falsch');
       setBadAnswer(true);
     }
   };
@@ -164,9 +164,11 @@ function QuizUI(props) {
     setSelectedAnswer(index);
   }
 
-  if (preHook != null) {
-    preHook();
-  }
+  useEffect(() => {
+    if (preHook != null) {
+      preHook();
+    }
+  }, [activeQuestion]);
 
   return (
     <div className="quiz-container">
@@ -186,7 +188,8 @@ function QuizUI(props) {
               <ul>
                 {choices.map((answer, index) => (
                   <li
-                    onClick={() => onAnswerSelected(index)}
+                    // if the info is shown, we effectively disable the buttons
+                    onClick={showInfo ? null : () => onAnswerSelected(index)}
                     key={answer}
                     className={
                       selectedAnswer === index ? 'selected-answer' : null
@@ -200,20 +203,26 @@ function QuizUI(props) {
             return (
               <input type="range" min="1" max="100" value="50" class="slider" id="myRange"/>
                 )
+          default:
+            return ('you fucked up lol')
         }
       })()}
       <div className="flex-right">
         <button onClick={onClickNext} disabled={selectedAnswer === null}>
-          {!showInfo ? 'Stimmts?' : activeQuestion == questions.length - 1 ? 'Nochmal' : 'Weiter'}
+          {!showInfo ? 'Stimmts?' : activeQuestion === questions.length - 1 ? 'Nochmal' : 'Weiter'}
         </button>
       </div>
 
-      {badAnswer && (<div>
-        Leider nicht richtig, versuche es nochmal!
-      </div>)}
-      {showInfo && (<div>
-        {info}
-      </div>)}
+      {badAnswer && (
+        <div>
+          Leider nicht richtig, versuche es nochmal!
+        </div>
+      )}
+      {showInfo && (
+        <div>
+          {info}
+        </div>
+      )}
     </div>
   );
 }
@@ -433,9 +442,12 @@ function App() {
   const [canHighlight, setCanHighlight] = useState(true);
   const [fragen, setFragen] = useState([]);
   const [questionCounter, setQuestionCounter] = useState(0);
+  // TODO is this a good way to set camera position?
+  const [cameraRotation, setCameraRotation] = useState([2.4, -0.05, -0.05]);
+  const [image, setImage] = useState(null);
 
   // FRAGEN LADEN VON JSON
-  React.useEffect(() => {
+  useEffect(() => {
     fetch("/Quiz.json")
       .then((response) => response.json())
       .then((data) => setFragen(data));
@@ -446,30 +458,41 @@ function App() {
   return (
     <div className="wrapper">
       <div className="card relief">
-          <Suspense>
-            <Canvas>
-              <Environment preset="warehouse" background blur={0.6} />
-              <Relief
-                infoText={infoText}
-                setInfoText={setInfoText}
-                canHighlight={canHighlight}
-                setCanHighlight={setCanHighlight}
-                highlightTuch={highlightTuch}
-                setHighlightTuch={setHighlightTuch}
-                highlightJesus={highlightJesus}
-                setHighlightJesus={setHighlightJesus}
-              />
-              <OrbitControls
-                enablePan={true}
-                enableZoom={true}
-                enableRotate={true}
-              />
-            </Canvas>
-          </Suspense>
+        <Suspense>
+          <Canvas>
+            <Environment preset="warehouse" background blur={0.6}/>
+            <Relief
+              infoText={infoText}
+              setInfoText={setInfoText}
+              canHighlight={canHighlight}
+              setCanHighlight={setCanHighlight}
+              highlightTuch={highlightTuch}
+              setHighlightTuch={setHighlightTuch}
+              highlightJesus={highlightJesus}
+              setHighlightJesus={setHighlightJesus}
+              cameraRotation={cameraRotation}
+            />
+            <OrbitControls
+              enablePan={true}
+              enableZoom={true}
+              enableRotate={true}
+            />
+          </Canvas>
+        </Suspense>
+      </div>
+
+      {image && (
+        // TODO flexbox, relief above img
+        <div>
+          <img src={image}/>
         </div>
+      )}
+
       <div className="card quiz">
         <QuizUI
           setHighlightTuch={setHighlightTuch}
+          setCameraRotation={setCameraRotation}
+          setImage={setImage}
         />
       </div>
     </div>
