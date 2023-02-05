@@ -120,11 +120,39 @@ function QuizUI({
 }) {
   const questions = [
     {
-      question: 'Wann wurde das Relief erstellt?',
-      choices: ['1400', '1500', '1600', '1700'],
-      type: 'MCQ',
+      question: "Wann wurde das Relief erstellt?",
+      choices: ["ca. 1400", "ca. 1500", "ca. 1600", "ca. 1700"],
+      type: "MCQ",
       correctAnswer: 1,
-      info: 'Richtig! Es wurde in einem Jahr von einem Typen erstellt.',
+      info: (
+        <div>
+          Das Relief wurde <b>1506-1508</b> vom Nürnberger Bildhauer und
+          Baumeister Adam Kraft geschaffen.
+          <br />
+          Es ist Teil des{" "}
+          <a
+            href={"https://de.wikipedia.org/wiki/N%C3%BCrnberger_Kreuzweg"}
+            target={"_blank"}
+          >
+            Nürnberger Kreuzwegs
+          </a>
+          , dessen 7 Stationen sich einst entlang der Burgschmietstraße zum
+          Johannisfriedhof erstreckten. Zwischen 1889 und 1954 wurden die
+          Originale ins{" "}
+          <a
+            href={
+              "https://www.gnm.de/ausstellungen/sonderausstellungen-rueckblick/adam-kraft/"
+            }
+            target="_blank"
+          >
+            {" "}
+            Germanischen Nationalmuseum
+          </a>{" "}
+          gebracht. An den ursprünglichen Standorten haben Repliken ihre
+          Positionen eingenommen und ermöglichen somit weiterhin die Begehung des
+          dem Kreuzweg nachempfundenen Weges.
+        </div>
+      ),
       preHook: () => {
         // clear everything in case quiz is restarted
         setCameraPosition(cameraPositionStart);
@@ -137,11 +165,47 @@ function QuizUI({
       postHook: null,
     },
     {
-      question: 'Wie nennt man das markierte Objekt?',
-      choices: ['Schweisstuch', 'Scheisstuch', 'ka'],
-      type: 'MCQ',
-      correctAnswer: 0,
-      info: 'info die nach der frage angezeigt wird',
+      question: "Woraus ist dieses Relief gemacht?",
+      choices: [
+        "Bamberger Lehm",
+        "Weimarer Travertin (Kalkstein)",
+        "Nürnberger Burgsandstein",
+        "Griechischer Marmor",
+      ],
+      type: "MCQ",
+      correctAnswer: 2,
+      info: (
+        <div>
+          Die sieben monumentalen Reliefs aus <b>Nürnberger Burgssandstein</b>{" "}
+          stellen eines der ältesten Beispiele der Bildgattung des Kreuzwegs im
+          deutschen Sprachraum dar. Sie sind ein ganz und gar lokales Produkt und
+          zeigen die wichtigsten Stationen des in der Bibel beschriebenen
+          Kreuzweges Jesu.
+        </div>
+      ),
+      preHook: null,
+      postHook: null,
+    },
+    {
+      question: "Wie nennt man das markierte Objekt?",
+      choices: [
+        "Marientuch",
+        "Schweißtuch der Veronika",
+        "Christus Druck",
+        "Römischer Lappen",
+      ],
+      type: "MCQ",
+      correctAnswer: 1,
+      info: (
+        <div>
+          Das <b>Schweißtuch der Veronika</b> oder auch Schweißtuch Christi
+          genannt ist Teil der christlichen Überlieferung des Kreuzwegs. Christus
+          soll sein Gesicht in das Tuch gedrückt haben und durch zurückbleibenden
+          Schweiß und Blut ein Abbild seinerselbst darauf hinterlassen haben. Das
+          Objekt selbst gilt als eine der kostbarsten und am meisten verehrten
+          Reliquien der Christenheit und wird im Petersdom in Rom aufbewahrt.
+        </div>
+      ),
       preHook: () => {
         setCameraPosition([6, 15, 2]);
         setCameraRotation([0.0, 0.5, 0.5]);
@@ -150,11 +214,21 @@ function QuizUI({
       postHook: null,
     },
     {
-      question: 'Wofuer steht der Name Vera Ikon?',
-      choices: ['Schweisstuch', 'Scheisstuch', 'ka'],
-      type: 'MCQ',
-      correctAnswer: 0,
-      info: 'info die nach der frage angezeigt wird',
+      question:
+        "Wie heißt der mit dem Objekt verbundene Bildmotiv in der Ikonographie?",
+      choices: ["imprimo simulacrum", "Marienbild", "Vera Ikon"],
+      type: "MCQ",
+      correctAnswer: 2,
+      info: (
+        <div>
+          Der Name der Veronika wird in der westlichen Lesart als Zusammensetzung
+          des lateinischen Wortes <i>vera</i> für "wahr" und des griechischen{" "}
+          <i>Εικών (ikon)</i> für "Bild" gedeutet. Gleichzeitig ist der Begriff
+          "Vera Ikon" auch ein Anagramm des Namens der heiligen Veronika. Das{" "}
+          <i>Vera Ikon</i> gilt als das "wahre Abbild" Christi und ist als Motiv
+          Gegenstand vieler Kunstwerke geworden.
+        </div>
+      ),
       preHook: () => {
         // unset because of previous question
         setHighlightTuch(false);
@@ -162,11 +236,18 @@ function QuizUI({
       postHook: null,
     },
     {
-      question: 'Wie viele Koepfe siehst du im Relief?',
-      choices: ['6', '7', '8', '9'],
-      type: 'MCQ',
+      question: "Wie viele Köpfe siehst du im Relief?",
+      choices: ["6", "7", "8", "9", "10"],
+      type: "MCQ",
       correctAnswer: 0,
-      info: 'info die nach der frage angezeigt wird',
+      info: (
+        <div>
+          Einige Körper scheinen die dazugehörigen Köpfe verloren zu haben. Das im
+          GNM zu sehende Relief enthält nach jetzigem Stand noch <b>6 Köpfe</b>.
+          Neben der heiligen Victoria, die mit einer Magd aus einem Haus tritt,
+          befinden sich auch eine Reihe von Söldnern in der Szene.
+        </div>
+      ),
       preHook: () => {
         setCameraPosition(cameraPositionStart);
         setCameraRotation(cameraRotationStart);
@@ -176,11 +257,21 @@ function QuizUI({
       },
     },
     {
-      question: 'Wie viele Koepfe siehst du in der rekonstruierten Version des Reliefs?',
-      choices: ['6', '7', '8', '9'],
-      type: 'MCQ',
-      correctAnswer: 0,
-      info: 'info die nach der frage angezeigt wird',
+      question:
+        "Wie viele Köpfe siehst du in der rekonstruierten Version des Reliefs?",
+      choices: ["6", "7", "8", "9", "10"],
+      type: "MCQ",
+      correctAnswer: 4,
+      info: (
+        <div>
+          Für die Anfertigung der Repliken wurde anhand von historischen Quellen
+          versucht, der ursprüngliche Zustand der Werke wiederherzustellen. Durch
+          die Gegenüberstellung wird deutlich wie viele Elemente der Szene in den
+          fast 500 Jahren der Witterung und Zerstörung zum Opfer fielen - so
+          scheinbar auch viele Söldnerfiguren, die sich eigentlich im Hintergrund
+          befanden.
+        </div>
+      ),
       preHook: () => {
         // unset because of previous question
         setHighlightHeads(false);
@@ -189,11 +280,20 @@ function QuizUI({
       postHook: null,
     },
     {
-      question: 'Versuche die Inschrift zu uebersetzen: fuelle die Luecken',
-      choices: ['6', '7', '8', '9'],
-      type: 'MCQ', // TODO lueckentext
+      question: "Versuche die Inschrift zu übersetzen: fülle die Lücken",
+      choices: ["6", "7", "8", "9"],
+      type: "MCQ", // TODO lueckentext
       correctAnswer: 0,
-      info: 'info die nach der frage angezeigt wird',
+      info: (
+        <div>
+          "Hier hat Cristus sein heiligs Angesicht der heiligen Fraw Veronica auf
+          iren Slayr gedruckt vor irem Haus Vc Srytt von Pilatus Haws"
+          <br />
+          Unterhalb der Relief befanden sich ursprünglich auch Inschriften, die
+          die Szene beschreiben und noch heute an den Stationen des Nürnberger
+          Kreuzwegs unter den Repliken zu lesen sind.
+        </div>
+      ),
       preHook: () => {
         setImage(RekonstruktionFotoSchrift);
       },
@@ -206,7 +306,8 @@ function QuizUI({
   const [badAnswer, setBadAnswer] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
-  const { question, choices, type, correctAnswer, info, preHook, postHook } = questions[activeQuestion];
+  const { question, choices, type, correctAnswer, info, preHook, postHook } =
+    questions[activeQuestion];
 
   const onClickNext = () => {
     if (selectedAnswer === correctAnswer) {
