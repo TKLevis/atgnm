@@ -1,10 +1,8 @@
 import "./index.css";
 import { Suspense, useEffect, useState } from "react";
-import React from "react";
+import { Button, Col } from "react-bootstrap";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment } from "@react-three/drei";
-import { useGLTF } from "@react-three/drei";
-import { Button, Col} from "react-bootstrap";
+import { PerspectiveCamera, OrbitControls, Environment, useGLTF } from "@react-three/drei";
 
 import ReliefModel from './ReliefGNM3.glb'
 
@@ -14,10 +12,19 @@ import RekonstruktionFotoRelief from './images/RekonstruktionFotoRelief.jpg'
 import RekonstruktionFotoSchrift from './images/RekonstruktionFotoSchrift.jpg'
 
 //RELIEF
-function Relief(props) {
+function Relief({
+  highlightTuch,
+  setHighlightTuch,
+  highlightJesus,
+  setHighlightJesus,
+  highlightHeads,
+  highlightBroken,
+  setInfoText,
+  canHighlight,
+  cameraPosition,
+  cameraRotation,
+}) {
   const { nodes, materials } = useGLTF(ReliefModel);
-  const { highlightTuch, setHighlightTuch, highlightJesus, setHighlightJesus,
-    setInfoText, canHighlight, cameraRotation } = props;
 
   var currentMatTuch = materials.material0;
   var currentMatJesus = materials.material0;
@@ -36,13 +43,14 @@ function Relief(props) {
   }
 
   return (
-    <group {...props} dispose={null}>
-      <group rotation={cameraRotation}>
+    <group dispose={null} rotation={[2.4, -0.05, -0.05]}>
+      <PerspectiveCamera position={cameraPosition} rotation={cameraRotation}>
         <mesh
           geometry={nodes.Model_1.geometry}
           material={materials.material0}
-        ></mesh>
+        />
         <mesh
+          // TODO delete?
           onPointerEnter={() => setHighlightTuch(true)}
           onPointerLeave={() => setHighlightTuch(false)}
           onClick={() => {
@@ -51,8 +59,8 @@ function Relief(props) {
             );
           }}
           geometry={nodes.Model_2.geometry}
-          material={currentMatTuch}
-        ></mesh>
+          material={highlightTuch ? materials.HoverJesus : materials.material0}
+        />
         <mesh
           onPointerEnter={() => setHighlightJesus(true)}
           onPointerLeave={() => setHighlightJesus(false)}
@@ -62,43 +70,54 @@ function Relief(props) {
             )
           }
           geometry={nodes.Model_3.geometry}
-          material={currentMatJesus}
-        ></mesh>
+          material={highlightHeads || highlightJesus ? materials.HoverJesus : materials.material0}
+        />
         <mesh
           geometry={nodes.Model_4.geometry}
-          material={materials.HoverVeronika}
+          material={highlightHeads ? materials.HoverVeronika : materials.material0}
         />
         <mesh
           geometry={nodes.Model_5.geometry}
-          material={materials.HoverLeft}
+          material={highlightHeads ? materials.HoverLeft : materials.material0}
         />
         <mesh
           geometry={nodes.Model_6.geometry}
-          material={materials.HoverMiddle}
+          material={highlightHeads ? materials.HoverMiddle : materials.material0}
         />
         <mesh
           geometry={nodes.Model_7.geometry}
-          material={materials.HoverRightBack}
+          material={highlightHeads ? materials.HoverRightBack : materials.material0}
         />
         <mesh
           geometry={nodes.Model_8.geometry}
-          material={materials.HoverRightFront}
+          material={highlightHeads ? materials.HoverRightFront : materials.material0}
         />
         <mesh
           geometry={nodes.Model_9.geometry}
-          material={materials.HoverBroken}
+          material={highlightBroken ? materials.HoverBroken : materials.material0}
         />
         <mesh
           geometry={nodes.Model_10.geometry}
-          material={materials.HoverSchwertreste}
+          // TODO ?
+          //material={materials.HoverSchwertreste}
+          material={materials.material0}
         />
-      </group>
+      </PerspectiveCamera>
     </group>
   );
 }
 
 // "inspired" from https://www.codevertiser.com/quiz-app-using-reactjs/
-function QuizUI({ setHighlightTuch, setCameraRotation, setImage }) {
+function QuizUI({
+  setHighlightTuch,
+  setHighlightHeads,
+  setHighlightBroken,
+  cameraPositionStart,
+  cameraRotationStart,
+  setCameraPosition,
+  setCameraRotation,
+  setImage,
+}) {
   const questions = [
     {
       question: 'Wann wurde das Relief erstellt?',
@@ -108,9 +127,14 @@ function QuizUI({ setHighlightTuch, setCameraRotation, setImage }) {
       info: 'Richtig! Es wurde in einem Jahr von einem Typen erstellt.',
       preHook: () => {
         // clear everything in case quiz is restarted
+        setCameraPosition(cameraPositionStart);
+        setCameraRotation(cameraRotationStart);
         setHighlightTuch(false);
+        setHighlightHeads(false);
+        setHighlightBroken(false);
         setImage(null);
       },
+      postHook: null,
     },
     {
       question: 'Wie nennt man das markierte Objekt?',
@@ -119,10 +143,11 @@ function QuizUI({ setHighlightTuch, setCameraRotation, setImage }) {
       correctAnswer: 0,
       info: 'info die nach der frage angezeigt wird',
       preHook: () => {
-        // TODO set camera pos correctly. not sure if this is a good approach
-        //setCameraRotation([3.4, -3.05, -0.05]);
+        setCameraPosition([6, 15, 2]);
+        setCameraRotation([0.0, 0.5, 0.5]);
         setHighlightTuch(true);
       },
+      postHook: null,
     },
     {
       question: 'Wofuer steht der Name Vera Ikon?',
@@ -134,6 +159,21 @@ function QuizUI({ setHighlightTuch, setCameraRotation, setImage }) {
         // unset because of previous question
         setHighlightTuch(false);
       },
+      postHook: null,
+    },
+    {
+      question: 'Wie viele Koepfe siehst du im Relief?',
+      choices: ['6', '7', '8', '9'],
+      type: 'MCQ',
+      correctAnswer: 0,
+      info: 'info die nach der frage angezeigt wird',
+      preHook: () => {
+        setCameraPosition(cameraPositionStart);
+        setCameraRotation(cameraRotationStart);
+      },
+      postHook: () => {
+        setHighlightHeads(true);
+      },
     },
     {
       question: 'Wie viele Koepfe siehst du in der rekonstruierten Version des Reliefs?',
@@ -142,8 +182,11 @@ function QuizUI({ setHighlightTuch, setCameraRotation, setImage }) {
       correctAnswer: 0,
       info: 'info die nach der frage angezeigt wird',
       preHook: () => {
+        // unset because of previous question
+        setHighlightHeads(false);
         setImage(RekonstruktionFotoRelief);
       },
+      postHook: null,
     },
     {
       question: 'Versuche die Inschrift zu uebersetzen: fuelle die Luecken',
@@ -154,6 +197,7 @@ function QuizUI({ setHighlightTuch, setCameraRotation, setImage }) {
       preHook: () => {
         setImage(RekonstruktionFotoSchrift);
       },
+      postHook: null,
     },
   ];
 
@@ -162,7 +206,7 @@ function QuizUI({ setHighlightTuch, setCameraRotation, setImage }) {
   const [badAnswer, setBadAnswer] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
-  const { question, choices, type, correctAnswer, info, preHook } = questions[activeQuestion];
+  const { question, choices, type, correctAnswer, info, preHook, postHook } = questions[activeQuestion];
 
   const onClickNext = () => {
     if (selectedAnswer === correctAnswer) {
@@ -183,10 +227,13 @@ function QuizUI({ setHighlightTuch, setCameraRotation, setImage }) {
   }
 
   useEffect(() => {
-    if (preHook != null) {
+    if (!showInfo && preHook != null) {
       preHook();
     }
-  }, [activeQuestion]);
+    if (showInfo && postHook != null) {
+      postHook();
+    }
+  }, [activeQuestion, showInfo]);
 
   return (
     <div className="quiz-container">
@@ -457,11 +504,16 @@ function App() {
   const [lernState, setLernState] = useState("Lernmodus");
   const [highlightTuch, setHighlightTuch] = useState(false);
   const [highlightJesus, setHighlightJesus] = useState(false);
+  const [highlightHeads, setHighlightHeads] = useState(false);
+  const [highlightBroken, setHighlightBroken] = useState(false);
   const [canHighlight, setCanHighlight] = useState(true);
   const [fragen, setFragen] = useState([]);
   const [questionCounter, setQuestionCounter] = useState(0);
-  // TODO is this a good way to set camera position?
-  const [cameraRotation, setCameraRotation] = useState([2.4, -0.05, -0.05]);
+
+  const cameraPositionStart = [6, 5, 13];
+  const cameraRotationStart = [0.0, 0.05, 0.0];
+  const [cameraPosition, setCameraPosition] = useState(cameraPositionStart);
+  const [cameraRotation, setCameraRotation] = useState(cameraRotationStart);
   const [image, setImage] = useState(null);
 
   // FRAGEN LADEN VON JSON
@@ -470,6 +522,8 @@ function App() {
       .then((response) => response.json())
       .then((data) => setFragen(data));
   }, []);
+
+  // TODO initially show that model is movable?
 
   //Hier werden alle JSX-Elemente(ähnlich html) und Components(z.B. Relief und TextUI) zusammengeführt die in index.js gerendert werden
   // außerdem werden den child-components state & update-function als props gegeben
@@ -489,6 +543,9 @@ function App() {
                 setHighlightTuch={setHighlightTuch}
                 highlightJesus={highlightJesus}
                 setHighlightJesus={setHighlightJesus}
+                highlightHeads={highlightHeads}
+                highlightBroken={highlightBroken}
+                cameraPosition={cameraPosition}
                 cameraRotation={cameraRotation}
               />
               <OrbitControls
@@ -508,6 +565,11 @@ function App() {
       <div className="card quiz">
         <QuizUI
           setHighlightTuch={setHighlightTuch}
+          setHighlightHeads={setHighlightHeads}
+          setHighlightBroken={setHighlightBroken}
+          cameraPositionStart={cameraPositionStart}
+          cameraRotationStart={cameraRotationStart}
+          setCameraPosition={setCameraPosition}
           setCameraRotation={setCameraRotation}
           setImage={setImage}
         />
