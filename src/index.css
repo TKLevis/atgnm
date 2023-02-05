@@ -39,6 +39,10 @@
   height: 100%;
 }
 
+canvas {
+  border-radius: 13px;
+}
+
 .quiz {
   width: 25vw;
   display: table-cell;
@@ -67,6 +71,9 @@ img:hover {
 .introText {
   font-size: 17px;
   text-align: justify;
+  background: #fff4e3;
+  border-radius: 13px;
+  padding: 30px 60px;
 }
 
 .introText button {

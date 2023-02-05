@@ -74,9 +74,22 @@ function Intro({ setStartedQuiz }) {
     <div className="introText">
       <h2>Nürnberger Kreuzweg - Station 4</h2>
       <div>
-        Im Germanischen Nationalmuseum in der Kartäuserkirche schmücken unter
-        anderem sieben steinerne Reliefs die hohen Wände. Mit Hilfe von
-        Fotogrammetrie konnten diese als 3D-Modelle in den digitalen Raum
+        <br />
+        In der{" "}
+        <a
+          href={"http://veranstaltung.gnm.de/raeume/kartaeuserkirche/"}
+          target={"_blank"}
+        >
+          Kartäuserkirche
+        </a>{" "}
+        im Herzen des Germanischen Nationalmuseums schmücken unter anderem sieben steinerne Reliefs die hohen Wände. Mit Hilfe von{" "}
+        <a
+          href={"https://de.wikipedia.org/wiki/Photogrammetrie"}
+          target={"_blank"}
+        >
+          Fotogrammetrie
+        </a>{" "}
+        konnten diese als 3D-Modelle in den digitalen Raum
         transportiert werden. Nun könnt ihr hier mit einem kleinen Quiz die
         vierte dieser Stationen erkunden und auch kleine versteckte Details in
         der beweglichen Ansicht entdecken!
@@ -85,16 +98,16 @@ function Intro({ setStartedQuiz }) {
 
       <h3>Die vierte Station</h3>
       <div>
+        <br />
         Einer biblischen Legende zufolge soll sich das Szenario während des
         Weges Christi zu seiner Kreuzigung zugetragen haben. Es geht um eine
         Frau, die angeblich seit 12 Jahren an einem nicht aufhörenden
         Blutfluss litt und der Meinung war, dass sie, wenn sie Jesus berühre,
-        gesund werden würden. Der Künstler Adam Kraft erschuf in Nürnberg auf
-        Grundlage dieser Legende eine seiner sieben Kreuzwegstationen Christi.
+        gesund werden würden. Der Bildhauer Adam Kraft erschuf in Nürnberg auf
+        Grundlage dieser Legende eine seiner sieben Kreuzwegstationen.
         <br />
-        Um den weiteren Fortgang der Legende zu erfahren, klickt euch durch
-        das Quiz! Darin erfahrt ihr alle Einzelheiten, auch zu der Umsetzung
-        des Künstlers Adam Kraft in Nürnberg.
+        Um mehr über die Legende und das Bildmotiv zu erfahren, klickt euch durch
+        das Quiz!
       </div>
 
       <div className="flex-right">
@@ -244,7 +257,7 @@ function QuizUI({
         <div>
           Einige Körper scheinen die dazugehörigen Köpfe verloren zu haben. Das im
           GNM zu sehende Relief enthält nach jetzigem Stand noch <b>6 Köpfe</b>.
-          Neben der heiligen Victoria, die mit einer Magd aus einem Haus tritt,
+          Neben der heiligen Veronika, die mit einer Magd aus einem Haus tritt,
           befinden sich auch eine Reihe von Söldnern in der Szene.
         </div>
       ),
@@ -288,7 +301,7 @@ function QuizUI({
       correctAnswer: 0,
       info: (
         <div>
-          "Hier hat Cristus sein heiligs Angesicht der heiligen Fraw Veronica auf
+          "Hier hat Cristus sein heiligs Angesicht der heiligen Fraw Veronika auf
           iren Slayr gedruckt vor irem Haus Vc Srytt von Pilatus Haws"
           <br />
           Unterhalb der Relief befanden sich ursprünglich auch Inschriften, die
@@ -330,7 +343,7 @@ function QuizUI({
 
   const onAnswerSelected = (index) => {
     setSelectedAnswer(index);
-  }
+  };
 
   useEffect(() => {
     if (!showInfo && preHook != null) {
@@ -375,7 +388,7 @@ function QuizUI({
               <input type="range" min="1" max="100" value="50" class="slider" id="myRange"/>
                 )
           default:
-            return ('you fucked up lol')
+            return ('we fucked up lol sorry')
         }
       })()}
       <div className="flex-right">
