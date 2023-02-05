@@ -6,6 +6,8 @@ import { OrbitControls, Environment } from "@react-three/drei";
 import { useGLTF } from "@react-three/drei";
 import { Button, Col} from "react-bootstrap";
 
+import ReliefModel from './ReliefGNM3.glb'
+
 import black from './images/black.png'
 import RekonstruktionFoto from './images/RekonstruktionFoto.jpg'
 import RekonstruktionFotoRelief from './images/RekonstruktionFotoRelief.jpg'
@@ -13,7 +15,7 @@ import RekonstruktionFotoSchrift from './images/RekonstruktionFotoSchrift.jpg'
 
 //RELIEF
 function Relief(props) {
-  const { nodes, materials } = useGLTF("/ReliefGNM3.glb");
+  const { nodes, materials } = useGLTF(ReliefModel);
   const { highlightTuch, setHighlightTuch, highlightJesus, setHighlightJesus,
     setInfoText, canHighlight, cameraRotation } = props;
 
