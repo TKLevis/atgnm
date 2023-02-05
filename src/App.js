@@ -3,7 +3,7 @@ import { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrthographicCamera, OrbitControls, Environment, useGLTF } from "@react-three/drei";
 
-import ReliefModel from './ReliefGNM3.glb'
+import ReliefModel from './ReliefGNM7.glb'
 
 import RekonstruktionFotoRelief from './images/RekonstruktionFotoRelief.jpg'
 import RekonstruktionFotoReliefKoepfe from './images/RekonstruktionFotoReliefKoepfe.jpg'
@@ -12,7 +12,6 @@ import RekonstruktionFotoSchrift from './images/RekonstruktionFotoSchrift.jpg'
 //RELIEF
 function Relief({
   highlightTuch,
-  setHighlightTuch,
   highlightHeads,
   highlightBroken,
   cameraPosition,
@@ -28,9 +27,6 @@ function Relief({
           material={materials.material0}
         />
         <mesh
-          // TODO delete?
-          onPointerEnter={() => setHighlightTuch(true)}
-          onPointerLeave={() => setHighlightTuch(false)}
           geometry={nodes.Model_2.geometry}
           material={highlightTuch ? materials.HoverJesus : materials.material0}
         />
@@ -40,23 +36,23 @@ function Relief({
         />
         <mesh
           geometry={nodes.Model_4.geometry}
-          material={highlightHeads ? materials.HoverVeronika : materials.material0}
+          material={highlightHeads ? materials.HoverJesus : materials.material0}
         />
         <mesh
           geometry={nodes.Model_5.geometry}
-          material={highlightHeads ? materials.HoverLeft : materials.material0}
+          material={highlightHeads ? materials.HoverJesus : materials.material0}
         />
         <mesh
           geometry={nodes.Model_6.geometry}
-          material={highlightHeads ? materials.HoverMiddle : materials.material0}
+          material={highlightHeads ? materials.HoverJesus : materials.material0}
         />
         <mesh
           geometry={nodes.Model_7.geometry}
-          material={highlightHeads ? materials.HoverRightBack : materials.material0}
+          material={highlightHeads ? materials.HoverJesus : materials.material0}
         />
         <mesh
           geometry={nodes.Model_8.geometry}
-          material={highlightHeads ? materials.HoverRightFront : materials.material0}
+          material={highlightHeads ? materials.HoverJesus : materials.material0}
         />
         <mesh
           geometry={nodes.Model_9.geometry}
@@ -436,7 +432,6 @@ function App() {
               <Environment preset="warehouse" background blur={0.6}/>
               <Relief
                 highlightTuch={highlightTuch}
-                setHighlightTuch={setHighlightTuch}
                 highlightHeads={highlightHeads}
                 highlightBroken={highlightBroken}
                 cameraPosition={cameraPosition}
