@@ -57,11 +57,28 @@ img:hover {
 }
 
 .infoText {
-  font-size: 20px;
+  font-size: 18px;
   text-align: justify;
   margin-top: 20px;
   margin-left: -20px;
   margin-right: -20px;
+}
+
+.introText {
+  font-size: 17px;
+  text-align: justify;
+}
+
+.introText button {
+  background: linear-gradient(90.04deg, #800080 0.03%, #ffc0cb 99.96%);
+  border-radius: 9px;
+  font-size: 18px;
+  color: #ffffff;
+  padding: 10px 42px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 15px;
 }
 
 /* "inspired" from https://www.codevertiser.com/quiz-app-using-reactjs/ */
