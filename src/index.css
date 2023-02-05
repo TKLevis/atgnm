@@ -29,6 +29,10 @@
   background-color: #6cc2ce;
 }
 
+.table {
+  display: table;
+}
+
 .relief {
   min-width: 65vw;
   min-height: 40%;
@@ -37,9 +41,12 @@
 
 .quiz {
   width: 25vw;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 img {
+  border-radius: 13px;
   max-width: 80%;
   max-height: 60%;
   transition: transform 0.2s 0.0s;
@@ -49,11 +56,18 @@ img:hover {
   transform: scale(1.75);
 }
 
+.infoText {
+  font-size: 20px;
+  text-align: justify;
+  margin-top: 20px;
+  margin-left: -20px;
+  margin-right: -20px;
+}
+
 /* "inspired" from https://www.codevertiser.com/quiz-app-using-reactjs/ */
 .quiz-container {
-  background: #ffffff;
-  border-radius: 4px;
-  margin-top: 100px;
+  background: #fff4e3;
+  border-radius: 13px;
   padding: 30px 60px;
 }
 
@@ -77,7 +91,6 @@ img:hover {
 
 .quiz-container ul {
   margin-top: 20px;
-  margin-left: -40px;
 }
 
 .quiz-container ul li {
@@ -136,36 +149,3 @@ img:hover {
   color: #800080;
   font-size: 22px;
 }
-
-.button-column {
-  position: fixed;
-  top: 73vh;
-  left: 7vw;
-  width: 180px;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  gap: 20px;
-  border-radius: 13px;
-  background-color:  #6cc2ce;
-  box-shadow: 20px 40px 33px rgba(0,0,0,0.3);
-}
-
-.button1 {
-  height: 60px;
-  width : 150px;
-  border-radius: 13px;
-  font-size: large;
-  background-color:  #6cafce;
-  color:white;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.colors {
-  display:flex;
-  flex-direction:row;
-}
-
-.colors div {padding:8px;}
