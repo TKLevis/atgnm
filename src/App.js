@@ -6,7 +6,9 @@ import { OrbitControls, Environment } from "@react-three/drei";
 import { useGLTF } from "@react-three/drei";
 import { Button, Col} from "react-bootstrap";
 
+import black from './images/black.png'
 import RekonstruktionFoto from './images/RekonstruktionFoto.jpg'
+import RekonstruktionFotoRelief from './images/RekonstruktionFotoRelief.jpg'
 import RekonstruktionFotoSchrift from './images/RekonstruktionFotoSchrift.jpg'
 
 //RELIEF
@@ -102,7 +104,11 @@ function QuizUI({ setHighlightTuch, setCameraRotation, setImage }) {
       type: 'MCQ',
       correctAnswer: 1,
       info: 'Richtig! Es wurde in einem Jahr von einem Typen erstellt.',
-      preHook: null,
+      preHook: () => {
+        // clear everything in case quiz is restarted
+        setHighlightTuch(false);
+        setImage(null);
+      },
     },
     {
       question: 'Wie nennt man das markierte Objekt?',
@@ -112,7 +118,7 @@ function QuizUI({ setHighlightTuch, setCameraRotation, setImage }) {
       info: 'info die nach der frage angezeigt wird',
       preHook: () => {
         // TODO set camera pos correctly. not sure if this is a good approach
-        setCameraRotation([3.4, -3.05, -0.05]);
+        //setCameraRotation([3.4, -3.05, -0.05]);
         setHighlightTuch(true);
       },
     },
@@ -128,13 +134,23 @@ function QuizUI({ setHighlightTuch, setCameraRotation, setImage }) {
       },
     },
     {
-      question: 'Wie viele Koepfe siehst du in der rekonstruierten Version?',
+      question: 'Wie viele Koepfe siehst du in der rekonstruierten Version des Reliefs?',
       choices: ['6', '7', '8', '9'],
       type: 'MCQ',
       correctAnswer: 0,
       info: 'info die nach der frage angezeigt wird',
       preHook: () => {
-        setImage(RekonstruktionFoto);
+        setImage(RekonstruktionFotoRelief);
+      },
+    },
+    {
+      question: 'Versuche die Inschrift zu uebersetzen: fuelle die Luecken',
+      choices: ['6', '7', '8', '9'],
+      type: 'MCQ', // TODO lueckentext
+      correctAnswer: 0,
+      info: 'info die nach der frage angezeigt wird',
+      preHook: () => {
+        setImage(RekonstruktionFotoSchrift);
       },
     },
   ];
@@ -457,36 +473,35 @@ function App() {
   // außerdem werden den child-components state & update-function als props gegeben
   return (
     <div className="wrapper">
-      <div className="card relief">
-        <Suspense>
-          <Canvas>
-            <Environment preset="warehouse" background blur={0.6}/>
-            <Relief
-              infoText={infoText}
-              setInfoText={setInfoText}
-              canHighlight={canHighlight}
-              setCanHighlight={setCanHighlight}
-              highlightTuch={highlightTuch}
-              setHighlightTuch={setHighlightTuch}
-              highlightJesus={highlightJesus}
-              setHighlightJesus={setHighlightJesus}
-              cameraRotation={cameraRotation}
-            />
-            <OrbitControls
-              enablePan={true}
-              enableZoom={true}
-              enableRotate={true}
-            />
-          </Canvas>
-        </Suspense>
-      </div>
-
-      {image && (
-        // TODO flexbox, relief above img
-        <div>
-          <img src={image}/>
+      <div className="card wrapper-column">
+        <div className="relief">
+          <Suspense>
+            <Canvas>
+              <Environment preset="warehouse" background blur={0.6}/>
+              <Relief
+                infoText={infoText}
+                setInfoText={setInfoText}
+                canHighlight={canHighlight}
+                setCanHighlight={setCanHighlight}
+                highlightTuch={highlightTuch}
+                setHighlightTuch={setHighlightTuch}
+                highlightJesus={highlightJesus}
+                setHighlightJesus={setHighlightJesus}
+                cameraRotation={cameraRotation}
+              />
+              <OrbitControls
+                enablePan={true}
+                enableZoom={true}
+                enableRotate={true}
+              />
+            </Canvas>
+          </Suspense>
         </div>
-      )}
+
+        {image && (
+          <img src={image}/>
+        )}
+      </div>
 
       <div className="card quiz">
         <QuizUI
