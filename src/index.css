@@ -71,6 +71,7 @@ img:hover {
 .introText {
   font-size: 17px;
   text-align: justify;
+  text-justify: inter-character;
   background: #fff4e3;
   border-radius: 13px;
   padding: 30px 60px;
@@ -86,6 +87,29 @@ img:hover {
   border: none;
   cursor: pointer;
   margin-top: 15px;
+}
+
+.gapfilltext {
+  margin-top: 20px;
+}
+
+/* stolen from https://react-bootstrap.github.io/forms/select/ */
+.gapfilltext select {
+  padding: .175rem 1.75rem .175rem .75rem;
+  margin: .375rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  background-size: 16px 12px;
+  border: 1px solid #ced4da;
+  border-radius: .375rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  appearance: none;
 }
 
 /* "inspired" from https://www.codevertiser.com/quiz-app-using-reactjs/ */

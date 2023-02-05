@@ -1,5 +1,6 @@
 import "./index.css";
 import { Suspense, useEffect, useState } from "react";
+import Form from "react-bootstrap/Form";
 import { Canvas } from "@react-three/fiber";
 import { OrthographicCamera, OrbitControls, Environment, useGLTF } from "@react-three/drei";
 
@@ -72,7 +73,7 @@ function Relief({
 function Intro({ setStartedQuiz }) {
   return (
     <div className="introText">
-      <h2>Nürnberger Kreuzweg - Station 4</h2>
+      <h2>Nürnberger Kreuzweg</h2>
       <div>
         <br />
         In der{" "}
@@ -99,14 +100,14 @@ function Intro({ setStartedQuiz }) {
       <h3>Die vierte Station</h3>
       <div>
         <br />
-        Einer biblischen Legende zufolge soll sich das Szenario während des
+        Einer Legende zufolge soll sich das Szenario während des
         Weges Christi zu seiner Kreuzigung zugetragen haben. Es geht um eine
         Frau, die angeblich seit 12 Jahren an einem nicht aufhörenden
         Blutfluss litt und der Meinung war, dass sie, wenn sie Jesus berühre,
         gesund werden würden. Der Bildhauer Adam Kraft erschuf in Nürnberg auf
         Grundlage dieser Legende eine seiner sieben Kreuzwegstationen.
         <br />
-        Um mehr über die Legende und das Bildmotiv zu erfahren, klickt euch durch
+        Um mehr über die Geschichte und das Bildmotiv zu erfahren, klickt euch durch
         das Quiz!
       </div>
 
@@ -297,7 +298,7 @@ function QuizUI({
     {
       question: "Versuche die Inschrift zu übersetzen: fülle die Lücken",
       choices: ["6", "7", "8", "9"],
-      type: "MCQ", // TODO lueckentext
+      type: "gapfill", // TODO lueckentext
       correctAnswer: 0,
       info: (
         <div>
@@ -354,6 +355,19 @@ function QuizUI({
     }
   }, [activeQuestion, showInfo]);
 
+  const [numCorrectAnswers, setNumCorrectAnswers] = useState(0);
+
+  const onChangeDropdown = (e) => {
+    const val = e.target.value;
+    if (val === "1") {
+      setNumCorrectAnswers((x) => x + 1);
+      console.log("yes (" + val + "), total " + numCorrectAnswers);
+    } else {
+      setNumCorrectAnswers((x) => x - 1);
+      console.log("no (" + val + "), total " + numCorrectAnswers);
+    }
+  };
+
   return (
     <div className="quiz-container">
       <div>
@@ -383,10 +397,100 @@ function QuizUI({
                 ))}
               </ul>
             )
-          case 'slider': // TODO this is shit?
+          case 'gapfill':
             return (
-              <input type="range" min="1" max="100" value="50" class="slider" id="myRange"/>
-                )
+              <div className="gapfilltext">
+                Hier hat
+                <Form.Select aria-label="form1" onChange={onChangeDropdown}>
+                  <option value="0"></option>
+                  <option value="1">Christus</option>
+                  <option value="2">Christuslein</option>
+                  <option value="3">Ceilstus</option>
+                  <option value="4">Greiffus</option>
+                </Form.Select>
+                sein heiliges
+                <Form.Select aria-label="form2">
+                  <option value="0"></option>
+                  <option value="1">Angesicht</option>
+                  <option value="2">Ungelicht</option>
+                  <option value="3">Angesucht</option>
+                </Form.Select>
+                der heiligen
+                <Form.Select aria-label="form3">
+                  <option value="0"></option>
+                  <option value="1">Frau</option>
+                  <option value="3">Year</option>
+                  <option value="2">Jahr</option>
+                  <option value="3">Yeaw</option>
+                </Form.Select>
+                Veronika
+                <Form.Select aria-label="form4">
+                  <option value="0"></option>
+                  <option value="2">aus</option>
+                  <option value="1">auf</option>
+                  <option value="3">als</option>
+                </Form.Select>
+                <Form.Select aria-label="form5">
+                  <option value="0"></option>
+                  <option value="3">ihr</option>
+                  <option value="2">irisch</option>
+                  <option value="1">ihren</option>
+                </Form.Select>
+                <Form.Select aria-label="form6">
+                  <option value="0"></option>
+                  <option value="3">Sklaven</option>
+                  <option value="2">Slane</option>
+                  <option value="1">Schleier</option>
+                </Form.Select>
+                <Form.Select aria-label="form7">
+                  <option value="0"></option>
+                  <option value="3">gedruckt</option>
+                  <option value="2">geprügelt</option>
+                  <option value="1">gedrückt</option>
+                  <option value="4">gebrüllt</option>
+                </Form.Select>
+                <Form.Select aria-label="form8">
+                  <option value="0"></option>
+                  <option value="1">vor</option>
+                  <option value="2">nor</option>
+                  <option value="3">von</option>
+                </Form.Select>
+                ihrem Haus
+                <Form.Select aria-label="form9">
+                  <option value="0"></option>
+                  <option value="2">250</option>
+                  <option value="3">300</option>
+                  <option value="1">500</option>
+                  <option value="4">11c</option>
+                </Form.Select>
+                <Form.Select aria-label="form10">
+                  <option value="0"></option>
+                  <option value="3">Sept</option>
+                  <option value="1">Schritt</option>
+                  <option value="2">Seytt</option>
+                </Form.Select>
+                <Form.Select aria-label="form11">
+                  <option value="0"></option>
+                  <option value="3">vor</option>
+                  <option value="2">nor</option>
+                  <option value="1">von</option>
+                </Form.Select>
+                <Form.Select aria-label="form12">
+                  <option value="0"></option>
+                  <option value="3">Dilatus</option>
+                  <option value="2">Pilates</option>
+                  <option value="1">Pilatus</option>
+                  <option value="4">Pilafust</option>
+                </Form.Select>
+                <Form.Select aria-label="form13">
+                  <option value="0"></option>
+                  <option value="2">Hans</option>
+                  <option value="4">Gaus</option>
+                  <option value="1">Haus</option>
+                  <option value="3">Gans</option>
+                </Form.Select>
+              </div>
+            )
           default:
             return ('we fucked up lol sorry')
         }
@@ -450,11 +554,7 @@ function App() {
                 cameraPosition={cameraPosition}
                 cameraRotation={cameraRotation}
               />
-              <OrbitControls
-                enablePan={true}
-                enableZoom={true}
-                enableRotate={true}
-              />
+              <OrbitControls />
             </Canvas>
           </Suspense>
         </div>
