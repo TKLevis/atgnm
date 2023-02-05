@@ -277,7 +277,9 @@ function QuizUI({
         setHighlightHeads(false);
         setImage(RekonstruktionFotoRelief);
       },
-      postHook: null,
+      postHook: () => {
+        setImage(RekonstruktionFotoReliefKoepfe);
+      },
     },
     {
       question: "Versuche die Inschrift zu übersetzen: fülle die Lücken",
@@ -380,12 +382,12 @@ function QuizUI({
       </div>
 
       {badAnswer && (
-        <div>
+        <div className="infoText">
           Leider nicht richtig, versuche es nochmal!
         </div>
       )}
       {showInfo && (
-        <div>
+        <div className="infoText">
           {info}
         </div>
       )}
@@ -663,17 +665,19 @@ function App() {
         )}
       </div>
 
-      <div className="card quiz">
-        <QuizUI
-          setHighlightTuch={setHighlightTuch}
-          setHighlightHeads={setHighlightHeads}
-          setHighlightBroken={setHighlightBroken}
-          cameraPositionStart={cameraPositionStart}
-          cameraRotationStart={cameraRotationStart}
-          setCameraPosition={setCameraPosition}
-          setCameraRotation={setCameraRotation}
-          setImage={setImage}
-        />
+      <div className="card table">
+        <div className="quiz">
+          <QuizUI
+            setHighlightTuch={setHighlightTuch}
+            setHighlightHeads={setHighlightHeads}
+            setHighlightBroken={setHighlightBroken}
+            cameraPositionStart={cameraPositionStart}
+            cameraRotationStart={cameraRotationStart}
+            setCameraPosition={setCameraPosition}
+            setCameraRotation={setCameraRotation}
+            setImage={setImage}
+          />
+        </div>
       </div>
     </div>
   );

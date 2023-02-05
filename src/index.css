@@ -29,6 +29,10 @@
   background-color: #6cc2ce;
 }
 
+.table {
+  display: table;
+}
+
 .relief {
   min-width: 65vw;
   min-height: 40%;
@@ -37,6 +41,8 @@
 
 .quiz {
   width: 25vw;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 img {
@@ -49,11 +55,18 @@ img:hover {
   transform: scale(1.75);
 }
 
+.infoText {
+  font-size: 20px;
+  text-align: justify;
+  margin-top: 20px;
+  margin-left: -20px;
+  margin-right: -20px;
+}
+
 /* "inspired" from https://www.codevertiser.com/quiz-app-using-reactjs/ */
 .quiz-container {
-  background: #ffffff;
-  border-radius: 4px;
-  margin-top: 100px;
+  background: #fff4e3;
+  border-radius: 13px;
   padding: 30px 60px;
 }
 
@@ -77,7 +90,6 @@ img:hover {
 
 .quiz-container ul {
   margin-top: 20px;
-  margin-left: -40px;
 }
 
 .quiz-container ul li {
