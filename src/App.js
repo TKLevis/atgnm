@@ -73,6 +73,43 @@ function Relief({
   );
 }
 
+function Intro({ setStartedQuiz }) {
+  return (
+    <div className="introText">
+      <h2>Nürnberger Kreuzweg - Station 4</h2>
+      <div>
+        Im Germanischen Nationalmuseum in der Kartäuserkirche schmücken unter
+        anderem sieben steinerne Reliefs die hohen Wände. Mit Hilfe von
+        Fotogrammetrie konnten diese als 3D-Modelle in den digitalen Raum
+        transportiert werden. Nun könnt ihr hier mit einem kleinen Quiz die
+        vierte dieser Stationen erkunden und auch kleine versteckte Details in
+        der beweglichen Ansicht entdecken!
+      </div>
+      <br />
+
+      <h3>Die vierte Station</h3>
+      <div>
+        Einer biblischen Legende zufolge soll sich das Szenario während des
+        Weges Christi zu seiner Kreuzigung zugetragen haben. Es geht um eine
+        Frau, die angeblich seit 12 Jahren an einem nicht aufhörenden
+        Blutfluss litt und der Meinung war, dass sie, wenn sie Jesus berühre,
+        gesund werden würden. Der Künstler Adam Kraft erschuf in Nürnberg auf
+        Grundlage dieser Legende eine seiner sieben Kreuzwegstationen Christi.
+        <br />
+        Um den weiteren Fortgang der Legende zu erfahren, klickt euch durch
+        das Quiz! Darin erfahrt ihr alle Einzelheiten, auch zu der Umsetzung
+        des Künstlers Adam Kraft in Nürnberg.
+      </div>
+
+      <div className="flex-right">
+        <button onClick={() => { setStartedQuiz(true); }}>
+          {'Starte Quiz'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // "inspired" from https://www.codevertiser.com/quiz-app-using-reactjs/
 function QuizUI({
   setHighlightTuch,
@@ -83,6 +120,7 @@ function QuizUI({
   setCameraPosition,
   setCameraRotation,
   setImage,
+  setStartedQuiz,
 }) {
   const questions = [
     {
@@ -281,6 +319,9 @@ function QuizUI({
     if (selectedAnswer === correctAnswer) {
       if (showInfo) {
         setSelectedAnswer(null);
+        if (activeQuestion === questions.length - 1) {
+          setStartedQuiz(false);
+        }
         setActiveQuestion((prev) => (prev + 1) % questions.length);
         setShowInfo(false);
       }
@@ -343,7 +384,11 @@ function QuizUI({
       })()}
       <div className="flex-right">
         <button onClick={onClickNext} disabled={selectedAnswer === null}>
-          {!showInfo ? 'Stimmts?' : activeQuestion === questions.length - 1 ? 'Nochmal' : 'Weiter'}
+          {!showInfo
+            ? "Stimmts?"
+            : activeQuestion === questions.length - 1
+              ? "Zurück zum Anfang"
+              : "Weiter"}
         </button>
       </div>
 
@@ -375,6 +420,8 @@ function App() {
   const [cameraPosition, setCameraPosition] = useState(cameraPositionStart);
   const [cameraRotation, setCameraRotation] = useState(cameraRotationStart);
   const [image, setImage] = useState(null);
+
+  const [startedQuiz, setStartedQuiz] = useState(false);
 
   // TODO initially show that model is movable?
 
@@ -411,16 +458,23 @@ function App() {
 
       <div className="card table">
         <div className="quiz">
-          <QuizUI
-            setHighlightTuch={setHighlightTuch}
-            setHighlightHeads={setHighlightHeads}
-            setHighlightBroken={setHighlightBroken}
-            cameraPositionStart={cameraPositionStart}
-            cameraRotationStart={cameraRotationStart}
-            setCameraPosition={setCameraPosition}
-            setCameraRotation={setCameraRotation}
-            setImage={setImage}
-          />
+          {!startedQuiz ? (
+            <Intro
+              setStartedQuiz={setStartedQuiz}
+            />
+          ) : (
+            <QuizUI
+              setHighlightTuch={setHighlightTuch}
+              setHighlightHeads={setHighlightHeads}
+              setHighlightBroken={setHighlightBroken}
+              cameraPositionStart={cameraPositionStart}
+              cameraRotationStart={cameraRotationStart}
+              setCameraPosition={setCameraPosition}
+              setCameraRotation={setCameraRotation}
+              setImage={setImage}
+              setStartedQuiz={setStartedQuiz}
+            />
+          )}
         </div>
       </div>
     </div>
