@@ -1,7 +1,7 @@
 import "./index.css";
 import { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { PerspectiveCamera, OrbitControls, Environment, useGLTF } from "@react-three/drei";
+import { OrthographicCamera, OrbitControls, Environment, useGLTF } from "@react-three/drei";
 
 import ReliefModel from './ReliefGNM3.glb'
 
@@ -22,7 +22,7 @@ function Relief({
 
   return (
     <group dispose={null} rotation={[2.4, -0.05, -0.05]}>
-      <PerspectiveCamera position={cameraPosition} rotation={cameraRotation}>
+      <OrthographicCamera position={cameraPosition} rotation={cameraRotation}>
         <mesh
           geometry={nodes.Model_1.geometry}
           material={materials.material0}
@@ -68,7 +68,7 @@ function Relief({
           //material={materials.HoverSchwertreste}
           material={materials.material0}
         />
-      </PerspectiveCamera>
+      </OrthographicCamera>
     </group>
   );
 }
