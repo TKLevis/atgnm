@@ -161,7 +161,7 @@ function QuizUI({
             target="_blank"
           >
             {" "}
-            Germanischen Nationalmuseum
+            Germanische Nationalmuseum
           </a>{" "}
           gebracht. An den ursprünglichen Standorten haben Repliken ihre
           Positionen eingenommen und ermöglichen somit weiterhin die Begehung des
@@ -170,8 +170,8 @@ function QuizUI({
       ),
       preHook: () => {
         // clear everything in case quiz is restarted
-        setCameraPosition(cameraPositionStart);
-        setCameraRotation(cameraRotationStart);
+        //setCameraPosition(cameraPositionStart);
+        //setCameraRotation(cameraRotationStart);
         setHighlightTuch(false);
         setHighlightHeads(false);
         setHighlightBroken(false);
@@ -216,21 +216,23 @@ function QuizUI({
           Das <b>Schweißtuch der Veronika</b> oder auch Schweißtuch Christi
           genannt ist Teil der christlichen Überlieferung des Kreuzwegs. Christus
           soll sein Gesicht in das Tuch gedrückt haben und durch zurückbleibenden
-          Schweiß und Blut ein Abbild seinerselbst darauf hinterlassen haben. Das
+          Schweiß und Blut ein Abbild seiner Selbst darauf hinterlassen haben. Das
           Objekt selbst gilt als eine der kostbarsten und am meisten verehrten
           Reliquien der Christenheit und wird im Petersdom in Rom aufbewahrt.
         </div>
       ),
       preHook: () => {
-        setCameraPosition([6, 15, 2]);
-        setCameraRotation([0.0, 0.5, 0.5]);
+        // TODO setting camera-position/-rotation fucks everything up if the
+        // camera has been moved before by the user
+        //setCameraPosition([6, 15, 2]);
+        //setCameraRotation([0.0, 0.5, 0.5]);
         setHighlightTuch(true);
       },
       postHook: null,
     },
     {
       question:
-        "Wie heißt der mit dem Objekt verbundene Bildmotiv in der Ikonographie?",
+        "Wie heißt das mit dem Objekt verbundene Bildmotiv in der Ikonographie?",
       choices: ["imprimo simulacrum", "Marienbild", "Vera Ikon"],
       type: "MCQ",
       correctAnswer: 2,
@@ -258,14 +260,15 @@ function QuizUI({
       info: (
         <div>
           Einige Körper scheinen die dazugehörigen Köpfe verloren zu haben. Das im
-          GNM zu sehende Relief enthält nach jetzigem Stand noch <b>6 Köpfe</b>.
-          Neben der heiligen Veronika, die mit einer Magd aus einem Haus tritt,
-          befinden sich auch eine Reihe von Söldnern in der Szene.
+          Germanischen Nationalmuseum zu sehende Relief enthält nach jetzigem
+          Stand noch <b>6 Köpfe</b>. Neben der heiligen Veronika, die mit einer
+          Magd aus einem Haus tritt, befinden sich auch eine Reihe von Söldnern in
+          der Szene.
         </div>
       ),
       preHook: () => {
-        setCameraPosition(cameraPositionStart);
-        setCameraRotation(cameraRotationStart);
+        //setCameraPosition(cameraPositionStart);
+        //setCameraRotation(cameraRotationStart);
       },
       postHook: () => {
         setHighlightHeads(true);
@@ -281,7 +284,7 @@ function QuizUI({
         <div>
           Für die Anfertigung der Repliken wurde anhand von historischen Quellen
           versucht, der ursprüngliche Zustand der Werke wiederherzustellen. Durch
-          die Gegenüberstellung wird deutlich wie viele Elemente der Szene in den
+          die Gegenüberstellung wird deutlich, wie viele Elemente der Szene in den
           fast 500 Jahren der Witterung und Zerstörung zum Opfer fielen - so
           scheinbar auch viele Söldnerfiguren, die sich eigentlich im Hintergrund
           befanden.
@@ -306,7 +309,7 @@ function QuizUI({
           "Hier hat Cristus sein heiligs Angesicht der heiligen Fraw Veronika auf
           iren Slayr gedruckt vor irem Haus Vc Srytt von Pilatus Haws"
           <br />
-          Unterhalb der Relief befanden sich ursprünglich auch Inschriften, die
+          Unterhalb der Reliefe befanden sich ursprünglich auch Inschriften, die
           die Szene beschreiben und noch heute an den Stationen des Nürnberger
           Kreuzwegs unter den Repliken zu lesen sind.
         </div>
@@ -518,7 +521,7 @@ function QuizUI({
 
       {badAnswer && (
         <div className="infoText">
-          Leider nicht richtig, versuche es nochmal!
+          Leider nicht richtig. Versuche es nochmal!
         </div>
       )}
       {showInfo && (
