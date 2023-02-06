@@ -81,6 +81,7 @@ function Intro({ setStartedQuiz }) {
         <a
           href={"http://veranstaltung.gnm.de/raeume/kartaeuserkirche/"}
           target={"_blank"}
+          rel="noreferrer"
         >
           Kartäuserkirche
         </a>{" "}
@@ -88,6 +89,7 @@ function Intro({ setStartedQuiz }) {
         <a
           href={"https://de.wikipedia.org/wiki/Photogrammetrie"}
           target={"_blank"}
+          rel="noreferrer"
         >
           Fotogrammetrie
         </a>{" "}
@@ -148,6 +150,7 @@ function QuizUI({
           <a
             href={"https://de.wikipedia.org/wiki/N%C3%BCrnberger_Kreuzweg"}
             target={"_blank"}
+            rel="noreferrer"
           >
             Nürnberger Kreuzwegs
           </a>
@@ -159,6 +162,7 @@ function QuizUI({
               "https://www.gnm.de/ausstellungen/sonderausstellungen-rueckblick/adam-kraft/"
             }
             target="_blank"
+            rel="noreferrer"
           >
             {" "}
             Germanische Nationalmuseum
@@ -336,7 +340,7 @@ function QuizUI({
       const elems = dropdownSelectRefs.current;
 
       for (let i = 0; i < elems.length; ++i) {
-        if (elems[i].value != "1") {
+        if (elems[i].value !== "1") {
           console.log(i + " is wrong");
           setBadAnswer(true);
           return;
@@ -510,7 +514,7 @@ function QuizUI({
         }
       })()}
       <div className="flex-right">
-        <button onClick={onClickNext} disabled={selectedAnswer === null && type != 'gapfill'}>
+        <button onClick={onClickNext} disabled={selectedAnswer === null && type !== 'gapfill'}>
           {!showInfo
             ? "Stimmts?"
             : activeQuestion === questions.length - 1
@@ -549,6 +553,16 @@ function App() {
   const [image, setImage] = useState(null);
 
   const [startedQuiz, setStartedQuiz] = useState(false);
+
+  useEffect(() => {
+    // in case quiz is restarted
+    if (!startedQuiz) {
+      setHighlightTuch(false);
+      setHighlightHeads(false);
+      setHighlightBroken(false);
+      setImage(null);
+    }
+  }, [startedQuiz]);
 
   // TODO initially show that model is movable?
 
