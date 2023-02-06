@@ -1,5 +1,5 @@
 import "./index.css";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Canvas } from "@react-three/fiber";
 import { OrthographicCamera, OrbitControls, Environment, useGLTF } from "@react-three/drei";
@@ -297,10 +297,10 @@ function QuizUI({
       },
     },
     {
-      question: "Versuche die Inschrift zu übersetzen: fülle die Lücken",
-      choices: ["6", "7", "8", "9"],
-      type: "gapfill", // TODO lueckentext
-      correctAnswer: 0,
+      question: "Versuche die Inschrift zu übersetzen: fülle die Lücken.",
+      choices: [], // irrelevant
+      type: "gapfill",
+      correctAnswer: 0, // irrelevant
       info: (
         <div>
           "Hier hat Cristus sein heiligs Angesicht der heiligen Fraw Veronika auf
@@ -326,8 +326,31 @@ function QuizUI({
   const { question, choices, type, correctAnswer, info, preHook, postHook } =
     questions[activeQuestion];
 
+  const dropdownSelectRefs = useRef([]);
+
   const onClickNext = () => {
-    if (selectedAnswer === correctAnswer) {
+    if (type === 'gapfill') {
+      const elems = dropdownSelectRefs.current;
+
+      for (let i = 0; i < elems.length; ++i) {
+        if (elems[i].value != "1") {
+          console.log(i + " is wrong");
+          setBadAnswer(true);
+          return;
+        }
+      }
+
+      if (showInfo) {
+        setSelectedAnswer(null);
+        if (activeQuestion === questions.length - 1) {
+          setStartedQuiz(false);
+        }
+        setActiveQuestion((prev) => (prev + 1) % questions.length);
+        setShowInfo(false);
+      }
+      setShowInfo(!showInfo);
+      setBadAnswer(false);
+    } else if (selectedAnswer === correctAnswer) {
       if (showInfo) {
         setSelectedAnswer(null);
         if (activeQuestion === questions.length - 1) {
@@ -355,19 +378,6 @@ function QuizUI({
       postHook();
     }
   }, [activeQuestion, showInfo]);
-
-  const [numCorrectAnswers, setNumCorrectAnswers] = useState(0);
-
-  const onChangeDropdown = (e) => {
-    const val = e.target.value;
-    if (val === "1") {
-      setNumCorrectAnswers((x) => x + 1);
-      console.log("yes (" + val + "), total " + numCorrectAnswers);
-    } else {
-      setNumCorrectAnswers((x) => x - 1);
-      console.log("no (" + val + "), total " + numCorrectAnswers);
-    }
-  };
 
   return (
     <div className="quiz-container">
@@ -402,88 +412,88 @@ function QuizUI({
             return (
               <div className="gapfilltext">
                 Hier hat
-                <Form.Select aria-label="form1" onChange={onChangeDropdown}>
+                <Form.Select ref={el => dropdownSelectRefs.current[0] = el}>
                   <option value="0"></option>
-                  <option value="1">Christus</option>
                   <option value="2">Christuslein</option>
+                  <option value="1">Christus</option>
                   <option value="3">Ceilstus</option>
                   <option value="4">Greiffus</option>
                 </Form.Select>
                 sein heiliges
-                <Form.Select aria-label="form2">
+                <Form.Select ref={el => dropdownSelectRefs.current[1] = el}>
                   <option value="0"></option>
                   <option value="1">Angesicht</option>
-                  <option value="2">Ungelicht</option>
                   <option value="3">Angesucht</option>
+                  <option value="2">Ungelicht</option>
                 </Form.Select>
                 der heiligen
-                <Form.Select aria-label="form3">
+                <Form.Select ref={el => dropdownSelectRefs.current[2] = el}>
                   <option value="0"></option>
                   <option value="1">Frau</option>
                   <option value="3">Year</option>
                   <option value="2">Jahr</option>
-                  <option value="3">Yeaw</option>
+                  <option value="4">Yeaw</option>
                 </Form.Select>
                 Veronika
-                <Form.Select aria-label="form4">
+                <Form.Select ref={el => dropdownSelectRefs.current[3] = el}>
                   <option value="0"></option>
                   <option value="2">aus</option>
                   <option value="1">auf</option>
                   <option value="3">als</option>
                 </Form.Select>
-                <Form.Select aria-label="form5">
+                <Form.Select ref={el => dropdownSelectRefs.current[4] = el}>
                   <option value="0"></option>
                   <option value="3">ihr</option>
                   <option value="2">irisch</option>
                   <option value="1">ihren</option>
                 </Form.Select>
-                <Form.Select aria-label="form6">
+                <Form.Select ref={el => dropdownSelectRefs.current[5] = el}>
                   <option value="0"></option>
                   <option value="3">Sklaven</option>
                   <option value="2">Slane</option>
                   <option value="1">Schleier</option>
                 </Form.Select>
-                <Form.Select aria-label="form7">
+                <Form.Select ref={el => dropdownSelectRefs.current[6] = el}>
                   <option value="0"></option>
                   <option value="3">gedruckt</option>
                   <option value="2">geprügelt</option>
                   <option value="1">gedrückt</option>
                   <option value="4">gebrüllt</option>
                 </Form.Select>
-                <Form.Select aria-label="form8">
+                <Form.Select ref={el => dropdownSelectRefs.current[7] = el}>
                   <option value="0"></option>
                   <option value="1">vor</option>
                   <option value="2">nor</option>
                   <option value="3">von</option>
                 </Form.Select>
                 ihrem Haus
-                <Form.Select aria-label="form9">
+                <Form.Select ref={el => dropdownSelectRefs.current[8] = el}>
                   <option value="0"></option>
                   <option value="2">250</option>
                   <option value="3">300</option>
                   <option value="1">500</option>
                   <option value="4">11c</option>
                 </Form.Select>
-                <Form.Select aria-label="form10">
+                <Form.Select ref={el => dropdownSelectRefs.current[9] = el}>
                   <option value="0"></option>
                   <option value="3">Sept</option>
                   <option value="1">Schritt</option>
                   <option value="2">Seytt</option>
                 </Form.Select>
-                <Form.Select aria-label="form11">
+                <Form.Select ref={el => dropdownSelectRefs.current[10] = el}>
                   <option value="0"></option>
                   <option value="3">vor</option>
                   <option value="2">nor</option>
                   <option value="1">von</option>
                 </Form.Select>
-                <Form.Select aria-label="form12">
+                <Form.Select ref={el => dropdownSelectRefs.current[11] = el}>
                   <option value="0"></option>
                   <option value="3">Dilatus</option>
                   <option value="2">Pilates</option>
                   <option value="1">Pilatus</option>
                   <option value="4">Pilafust</option>
                 </Form.Select>
-                <Form.Select aria-label="form13">
+                <Form.Select ref={el => dropdownSelectRefs.current[12] = el}>
                   <option value="0"></option>
                   <option value="2">Hans</option>
                   <option value="4">Gaus</option>
@@ -497,7 +507,7 @@ function QuizUI({
         }
       })()}
       <div className="flex-right">
-        <button onClick={onClickNext} disabled={selectedAnswer === null}>
+        <button onClick={onClickNext} disabled={selectedAnswer === null && type != 'gapfill'}>
           {!showInfo
             ? "Stimmts?"
             : activeQuestion === questions.length - 1
