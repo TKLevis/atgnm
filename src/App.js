@@ -19,6 +19,7 @@ function Relief({
   cameraRotation,
 }) {
   const { nodes, materials } = useGLTF(ReliefModel);
+  const matHeads = highlightHeads ? materials.HoverJesus : materials.material0;
 
   return (
     <group dispose={null} rotation={[2.4, -0.05, -0.05]}>
@@ -33,27 +34,27 @@ function Relief({
         />
         <mesh
           geometry={nodes.Model_3.geometry}
-          material={highlightHeads ? materials.HoverJesus : materials.material0}
+          material={matHeads}
         />
         <mesh
           geometry={nodes.Model_4.geometry}
-          material={highlightHeads ? materials.HoverJesus : materials.material0}
+          material={matHeads}
         />
         <mesh
           geometry={nodes.Model_5.geometry}
-          material={highlightHeads ? materials.HoverJesus : materials.material0}
+          material={matHeads}
         />
         <mesh
           geometry={nodes.Model_6.geometry}
-          material={highlightHeads ? materials.HoverJesus : materials.material0}
+          material={matHeads}
         />
         <mesh
           geometry={nodes.Model_7.geometry}
-          material={highlightHeads ? materials.HoverJesus : materials.material0}
+          material={matHeads}
         />
         <mesh
           geometry={nodes.Model_8.geometry}
-          material={highlightHeads ? materials.HoverJesus : materials.material0}
+          material={matHeads}
         />
         <mesh
           geometry={nodes.Model_9.geometry}
