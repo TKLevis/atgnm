@@ -286,8 +286,8 @@ function QuizUI({
       correctAnswer: 4,
       info: (
         <div>
-          Für die Anfertigung der Repliken wurde anhand von historischen Quellen
-          versucht, der ursprüngliche Zustand der Werke wiederherzustellen. Durch
+          Für die Anfertigung der Kopien wurde anhand von historischen Quellen
+          versucht, den ursprünglichen Zustand der Werke wiederherzustellen. Durch
           die Gegenüberstellung wird deutlich, wie viele Elemente der Szene in den
           fast 500 Jahren der Witterung und Zerstörung zum Opfer fielen - so
           scheinbar auch viele Söldnerfiguren, die sich eigentlich im Hintergrund
@@ -310,12 +310,13 @@ function QuizUI({
       correctAnswer: 0, // irrelevant
       info: (
         <div>
-          "Hier hat Cristus sein heiligs Angesicht der heiligen Fraw Veronika auf
-          iren Slayr gedruckt vor irem Haus Vc Srytt von Pilatus Haws"
+          <i>"Hier hat Cristus sein heiligs Angesicht der heiligen Fraw Veronika auf
+            iren Slayr gedruckt vor irem Haus Vc Srytt von Pilatus Haws"</i>
           <br />
-          Unterhalb der Reliefe befanden sich ursprünglich auch Inschriften, die
-          die Szene beschreiben und noch heute an den Stationen des Nürnberger
-          Kreuzwegs unter den Repliken zu lesen sind.
+          <br />
+          Unterhalb der originalen Reliefs befanden sich ursprünglich auch
+          Inschriften, die die dargestellten Szenen beschrieben. Diese sind heute nur
+          noch an den Stationen des Nürnberger Kreuzwegs als Teil der Kopien zu lesen.
         </div>
       ),
       preHook: () => {
