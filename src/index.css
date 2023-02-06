@@ -36,7 +36,8 @@
 .relief {
   min-width: 65vw;
   min-height: 40%;
-  height: 100%;
+  width: 65vw;
+  height: 100vh;
 }
 
 canvas {
@@ -51,30 +52,33 @@ canvas {
 
 img {
   border-radius: 13px;
-  max-width: 80%;
+  max-width: 100%;
   max-height: 60%;
   transition: transform 0.2s 0.0s;
 }
 
 img:hover {
-  transform: scale(1.75);
+  transform: scale(1.5);
 }
 
 .infoText {
   font-size: 18px;
   text-align: justify;
+  text-justify: inter-character;
+  hyphens: auto;
   margin-top: 20px;
   margin-left: -20px;
   margin-right: -20px;
 }
 
 .introText {
-  font-size: 17px;
+  font-size: 16px;
   text-align: justify;
   text-justify: inter-character;
+  hyphens: auto;
   background: #fff4e3;
   border-radius: 13px;
-  padding: 30px 60px;
+  padding: 30px 40px;
 }
 
 .introText button {
