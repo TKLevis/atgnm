@@ -304,10 +304,29 @@ function QuizUI({
       },
     },
     {
-      question: "Versuche die Inschrift zu übersetzen: fülle die Lücken.",
-      choices: [], // irrelevant
+      question: "Versuche die Inschrift ins Hochdeutsche zu übersetzen: fülle die Lücken.", // TODO hochdeutsche?
+      choices: [
+        'Hier hat',
+        ['Christus', 'Christuslein', 'Ceilstus', 'Greiffus'],
+        'sein heiliges',
+        ['Angesicht', 'Angesucht', 'Ungelicht'],
+        'der heiligen',
+        ['Frau', 'Year', 'Jahr', 'Yeaw'],
+        'Veronika',
+        ['auf', 'aus', 'als'],
+        ['ihren', 'ihr', 'irisch'],
+        ['Schleier', 'Sklaven', 'Slane'],
+        ['gedrückt', 'gedruckt', 'geprügelt', 'gebrüllt'],
+        ['vor', 'von', 'nor'],
+        'ihrem Haus',
+        ['500', '300', '250', '11c'],
+        ['Schritt', 'Seytt', 'Sept'],
+        ['von', 'vor', 'nor'],
+        ['Pilatus', 'Pilates', 'Dilatus', 'Pilafust'],
+        ['Haus', 'Hans', 'Gans', 'Gaus']
+      ],
       type: "gapfill",
-      correctAnswer: 0, // irrelevant
+      correctAnswer: 0, // the 0th is correct for every single choice
       info: (
         <div>
           <i>"Hier hat Cristus sein heiligs Angesicht der heiligen Fraw Veronika auf
@@ -341,7 +360,8 @@ function QuizUI({
       const elems = dropdownSelectRefs.current;
 
       for (let i = 0; i < elems.length; ++i) {
-        if (elems[i].value !== "1") {
+        const e = elems[i];
+        if (e && e.value !== "y") {
           console.log(i + " is wrong");
           setBadAnswer(true);
           return;
@@ -415,103 +435,35 @@ function QuizUI({
                   </li>
                 ))}
               </ul>
-            )
+            );
           case 'gapfill':
             return (
               <div className="gapfilltext">
-                Hier hat
-                <Form.Select ref={el => dropdownSelectRefs.current[0] = el}>
-                  <option value="0"></option>
-                  <option value="2">Christuslein</option>
-                  <option value="1">Christus</option>
-                  <option value="3">Ceilstus</option>
-                  <option value="4">Greiffus</option>
-                </Form.Select>
-                sein heiliges
-                <Form.Select ref={el => dropdownSelectRefs.current[1] = el}>
-                  <option value="0"></option>
-                  <option value="1">Angesicht</option>
-                  <option value="3">Angesucht</option>
-                  <option value="2">Ungelicht</option>
-                </Form.Select>
-                der heiligen
-                <Form.Select ref={el => dropdownSelectRefs.current[2] = el}>
-                  <option value="0"></option>
-                  <option value="1">Frau</option>
-                  <option value="3">Year</option>
-                  <option value="2">Jahr</option>
-                  <option value="4">Yeaw</option>
-                </Form.Select>
-                Veronika
-                <Form.Select ref={el => dropdownSelectRefs.current[3] = el}>
-                  <option value="0"></option>
-                  <option value="2">aus</option>
-                  <option value="1">auf</option>
-                  <option value="3">als</option>
-                </Form.Select>
-                <Form.Select ref={el => dropdownSelectRefs.current[4] = el}>
-                  <option value="0"></option>
-                  <option value="3">ihr</option>
-                  <option value="2">irisch</option>
-                  <option value="1">ihren</option>
-                </Form.Select>
-                <Form.Select ref={el => dropdownSelectRefs.current[5] = el}>
-                  <option value="0"></option>
-                  <option value="3">Sklaven</option>
-                  <option value="2">Slane</option>
-                  <option value="1">Schleier</option>
-                </Form.Select>
-                <Form.Select ref={el => dropdownSelectRefs.current[6] = el}>
-                  <option value="0"></option>
-                  <option value="3">gedruckt</option>
-                  <option value="2">geprügelt</option>
-                  <option value="1">gedrückt</option>
-                  <option value="4">gebrüllt</option>
-                </Form.Select>
-                <Form.Select ref={el => dropdownSelectRefs.current[7] = el}>
-                  <option value="0"></option>
-                  <option value="1">vor</option>
-                  <option value="2">nor</option>
-                  <option value="3">von</option>
-                </Form.Select>
-                ihrem Haus
-                <Form.Select ref={el => dropdownSelectRefs.current[8] = el}>
-                  <option value="0"></option>
-                  <option value="2">250</option>
-                  <option value="3">300</option>
-                  <option value="1">500</option>
-                  <option value="4">11c</option>
-                </Form.Select>
-                <Form.Select ref={el => dropdownSelectRefs.current[9] = el}>
-                  <option value="0"></option>
-                  <option value="3">Sept</option>
-                  <option value="1">Schritt</option>
-                  <option value="2">Seytt</option>
-                </Form.Select>
-                <Form.Select ref={el => dropdownSelectRefs.current[10] = el}>
-                  <option value="0"></option>
-                  <option value="3">vor</option>
-                  <option value="2">nor</option>
-                  <option value="1">von</option>
-                </Form.Select>
-                <Form.Select ref={el => dropdownSelectRefs.current[11] = el}>
-                  <option value="0"></option>
-                  <option value="3">Dilatus</option>
-                  <option value="2">Pilates</option>
-                  <option value="1">Pilatus</option>
-                  <option value="4">Pilafust</option>
-                </Form.Select>
-                <Form.Select ref={el => dropdownSelectRefs.current[12] = el}>
-                  <option value="0"></option>
-                  <option value="2">Hans</option>
-                  <option value="4">Gaus</option>
-                  <option value="1">Haus</option>
-                  <option value="3">Gans</option>
-                </Form.Select>
+                {choices.map((part, partIndex) => (
+                  <span key={partIndex}>
+                    {typeof part === "string" ? (
+                      <span>{part}</span>
+                    ) : (
+                      <Form.Select
+                        key={part}
+                        ref={(el) => (dropdownSelectRefs.current[partIndex] = el)}
+                      >
+                        <option key="empty" />
+                        {part.map((choice, index) => {
+                          return (
+                            <option key={choice} value={index === correctAnswer ? "y" : ""}>
+                              {choice}
+                            </option>
+                          );
+                        })}
+                      </Form.Select>
+                    )}
+                  </span>
+                ))}
               </div>
-            )
+            );
           default:
-            return ('we fucked up lol sorry')
+            return ('we fucked up lol sorry');
         }
       })()}
       <div className="flex-right">
