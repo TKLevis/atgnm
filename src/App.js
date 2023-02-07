@@ -449,7 +449,7 @@ function QuizUI({
                         ref={(el) => (dropdownSelectRefs.current[partIndex] = el)}
                       >
                         <option key="empty" />
-                        {part.map((choice, index) => {
+                        {part.sort(() => Math.random() - 0.5).map((choice, index) => {
                           return (
                             <option key={choice} value={index === correctAnswer ? "y" : ""}>
                               {choice}
