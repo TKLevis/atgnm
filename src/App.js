@@ -445,13 +445,16 @@ function QuizUI({
                       <span>{part}</span>
                     ) : (
                       <Form.Select
-                        key={part}
+                        key={partIndex}
                         ref={(el) => (dropdownSelectRefs.current[partIndex] = el)}
                       >
                         <option key="empty" />
-                        {part.sort(() => Math.random() - 0.5).map((choice, index) => {
+                        {part.slice().sort(() => Math.random() - 0.5).map((choice) => {
                           return (
-                            <option key={choice} value={index === correctAnswer ? "y" : ""}>
+                            <option
+                              key={choice}
+                              value={choice === part[correctAnswer] ? "y" : ""}
+                            >
                               {choice}
                             </option>
                           );
