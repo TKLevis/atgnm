@@ -185,19 +185,3 @@ img:hover {
   display: flex;
   justify-content: flex-end;
 }
-
-.result h3 {
-  font-size: 24px;
-  letter-spacing: 1.4px;
-  text-align: center;
-}
-
-.result p {
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.result p span {
-  color: #800080;
-  font-size: 22px;
-}
