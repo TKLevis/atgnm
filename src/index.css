@@ -112,8 +112,18 @@ img:hover {
   background-size: 16px 12px;
   border: 1px solid #ced4da;
   border-radius: .375rem;
+  outline: none;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   appearance: none;
+}
+
+.answer-correct {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath fill='none' stroke='green' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6.1 16.2l7.1 7.2 16.7-16.8'/%3E%3C/svg%3E") !important;
+  border-color: green !important;
+}
+
+.answer-incorrect {
+  border-color: red !important;
 }
 
 /* "inspired" from https://www.codevertiser.com/quiz-app-using-reactjs/ */

@@ -359,10 +359,8 @@ function QuizUI({
     if (type === 'gapfill') {
       const elems = dropdownSelectRefs.current;
 
-      for (let i = 0; i < elems.length; ++i) {
-        const e = elems[i];
+      for (const e of elems) {
         if (e && e.value !== "y") {
-          console.log(i + " is wrong");
           setBadAnswer(true);
           return;
         }
@@ -443,17 +441,22 @@ function QuizUI({
                   <span key={partIndex}>
                     {typeof part === "string" ? (
                       <span>{part}</span>
-                    ) : (
+                    ) : ( // type == array
                       <Form.Select
                         key={partIndex}
                         ref={(el) => (dropdownSelectRefs.current[partIndex] = el)}
+                        onChange={(e) => {
+                          e.target.setAttribute(
+                            "class",
+                            { "y": "answer-correct", "n": "answer-incorrect", "empty": null }[e.target.value]);
+                        }}
                       >
-                        <option key="empty" />
+                        <option key="empty" value="empty" />
                         {part.slice().sort(() => Math.random() - 0.5).map((choice) => {
                           return (
                             <option
                               key={choice}
-                              value={choice === part[correctAnswer] ? "y" : ""}
+                              value={choice === part[correctAnswer] ? "y" : "n"}
                             >
                               {choice}
                             </option>
