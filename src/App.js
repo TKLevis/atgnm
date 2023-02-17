@@ -233,8 +233,12 @@ function QuizUI({
       postHook: null,
     },
     {
-      question:
-        "Wie heißt das mit dem Objekt verbundene Bildmotiv in der Ikonographie?",
+      question: (
+        <div>
+          Wie heißt das mit dem Objekt verbundene Bildmotiv in der{" "}
+          <abbr title="wissenschaftliche Methode, die sich mit der Bestimmung und Deutung von Motiven in Kunstwerken besch&auml;ftigt">Ikonographie</abbr>?
+        </div>
+      ),
       choices: ["imprimo simulacrum", "Marienbild", "Vera Ikon"],
       type: "MCQ",
       correctAnswer: 2,
