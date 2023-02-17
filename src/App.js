@@ -79,16 +79,16 @@ function Intro({ setStartedQuiz }) {
         <br />
         In der{" "}
         <a
-          href={"http://veranstaltung.gnm.de/raeume/kartaeuserkirche/"}
-          target={"_blank"}
+          href="http://veranstaltung.gnm.de/raeume/kartaeuserkirche/"
+          target="_blank"
           rel="noreferrer"
         >
           Kartäuserkirche
         </a>{" "}
         im Herzen des Germanischen Nationalmuseums schmücken unter anderem sieben steinerne Reliefs die hohen Wände. Mit Hilfe von{" "}
         <a
-          href={"https://de.wikipedia.org/wiki/Photogrammetrie"}
-          target={"_blank"}
+          href="https://de.wikipedia.org/wiki/Photogrammetrie"
+          target="_blank"
           rel="noreferrer"
         >
           Fotogrammetrie
@@ -148,8 +148,8 @@ function QuizUI({
           <br />
           Es ist Teil des{" "}
           <a
-            href={"https://de.wikipedia.org/wiki/N%C3%BCrnberger_Kreuzweg"}
-            target={"_blank"}
+            href="https://de.wikipedia.org/wiki/N%C3%BCrnberger_Kreuzweg"
+            target="_blank"
             rel="noreferrer"
           >
             Nürnberger Kreuzwegs
@@ -158,9 +158,7 @@ function QuizUI({
           Johannisfriedhof erstreckten. Zwischen 1889 und 1954 wurden die
           Originale ins{" "}
           <a
-            href={
-              "https://www.gnm.de/ausstellungen/sonderausstellungen-rueckblick/adam-kraft/"
-            }
+            href="https://www.gnm.de/ausstellungen/sonderausstellungen-rueckblick/adam-kraft/"
             target="_blank"
             rel="noreferrer"
           >
