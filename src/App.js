@@ -498,6 +498,64 @@ function QuizUI({
   );
 }
 
+function ContactButton() {
+  const [showContact, setShowContact] = useState(false);
+
+  const handleClick = () => {
+    setShowContact(true);
+  };
+
+  const handleClose = () => {
+    setShowContact(false);
+  };
+
+  return (
+    <div className="contact-button-container">
+      <button className="contact-button" onClick={handleClick}>
+        Kontakt
+      </button>
+      {showContact && (
+        <div className="contact-popup">
+          <div className="contact-popup-container">
+            <div className="contact-popup-header">
+              <h3>Kontaktiere uns!</h3>
+              <button className="close-button" onClick={handleClose}>
+                &times;
+              </button>
+            </div>
+            <div className="contact-popup-content">
+              <p>
+                Der Quellcode dieser Webseite sowie das dargestellte 3D-Modell sind auf{" "}
+                <a
+                  href="https://github.com/TKLevis/atgnm/tree/master"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  GitHub
+                </a>{" "}
+                zu finden.
+              </p>
+              <br/>
+              <p>
+                Um mit uns in Kontakt zu treten, wende Dich gerne an{" "}
+                <a
+                  href="mailto:felix.windsheimer@fau.de"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  felix.windsheimer@fau.de
+                </a>
+                .
+              </p>
+            </div>
+          </div>
+          <div className="contact-popup-overlay" onClick={handleClose} />
+        </div>
+      )}
+    </div>
+  );
+}
+
 // App-Component nutzt den State-Hook von react. useState returns current state & function that updates it
 // App-Component passes state and update-function down to child-components (z.B. TextUI, Relief)
 // -> state kann von überall geupdated und gelesen werden über props die der Component von parent gegeben werden
@@ -574,6 +632,7 @@ function App() {
           )}
         </div>
       </div>
+    <ContactButton/>
     </div>
   );
 }

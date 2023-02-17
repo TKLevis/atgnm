@@ -3,6 +3,8 @@
   padding: 0;
 }
 
+/* general */
+
 .wrapper {
   height: 100vh;
   width: 100vw;
@@ -33,6 +35,8 @@
   display: table;
 }
 
+/* specific elements */
+
 .relief {
   min-width: 65vw;
   min-height: 40%;
@@ -60,6 +64,8 @@ img {
 img:hover {
   transform: scale(1.5);
 }
+
+/* text boxes */
 
 .infoText {
   font-size: 18px;
@@ -93,6 +99,8 @@ img:hover {
   margin-top: 15px;
 }
 
+/* gap fill text questions */
+
 .gapfilltext {
   margin-top: 20px;
 }
@@ -118,6 +126,7 @@ img:hover {
 }
 
 .answer-correct {
+  /* adapted from https://codepen.io/vyatsun/pen/KmOWqo */
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath fill='none' stroke='green' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6.1 16.2l7.1 7.2 16.7-16.8'/%3E%3C/svg%3E") !important;
   border-color: green !important;
 }
@@ -126,7 +135,7 @@ img:hover {
   border-color: red !important;
 }
 
-/* "inspired" from https://www.codevertiser.com/quiz-app-using-reactjs/ */
+/* quiz ("inspired" from https://www.codevertiser.com/quiz-app-using-reactjs/) */
 .quiz-container {
   background: #fff4e3;
   border-radius: 13px;
@@ -194,4 +203,76 @@ img:hover {
 .flex-right {
   display: flex;
   justify-content: flex-end;
+}
+
+/* contact button */
+
+.contact-button-container {
+  position: fixed;
+  top: 0px;
+  right: 25px;
+  z-index: 1;
+}
+
+.contact-button {
+  padding: 5px;
+  border-radius: 0 0 13px 13px;
+  border-width: 0 2px 2px;
+  background-color: #fff4e3;
+  font-size: 18px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.contact-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-popup-container {
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+}
+
+.contact-popup-header {
+  background: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+  color: #fff;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.contact-popup-content {
+  background: #fff4e3;
+  padding: 20px;
+  border-radius: 0px 0px 10px 10px;
+  max-width: 400px;
+}
+
+.close-button {
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.contact-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
