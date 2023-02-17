@@ -236,7 +236,12 @@ function QuizUI({
       question: (
         <div>
           Wie heißt das mit dem Objekt verbundene Bildmotiv in der{" "}
-          <abbr title="wissenschaftliche Methode, die sich mit der Bestimmung und Deutung von Motiven in Kunstwerken besch&auml;ftigt">Ikonographie</abbr>?
+          <abbr
+            title="wissenschaftliche Methode, die sich mit der Bestimmung und Deutung von Motiven in Kunstwerken beschäftigt"
+          >
+            Ikonographie
+          </abbr>
+          ?
         </div>
       ),
       choices: ["imprimo simulacrum", "Marienbild", "Vera Ikon"],
@@ -281,8 +286,17 @@ function QuizUI({
       },
     },
     {
-      question:
-        "Wie viele Köpfe siehst du in der rekonstruierten Version des Reliefs?",
+      question: (
+        <div>
+          Wie viele Köpfe siehst du in der{" "}
+          <abbr
+            title="Fahre mit dem Mauszeiger über das Bild, um es zu vergrößern!"
+          >
+            rekonstruierten Version
+          </abbr>{" "}
+          des Reliefs?
+        </div>
+      ),
       choices: ["6", "7", "8", "9", "10"],
       type: "MCQ",
       correctAnswer: 4,
@@ -306,7 +320,17 @@ function QuizUI({
       },
     },
     {
-      question: "Versuche die Inschrift ins Hochdeutsche zu übersetzen: fülle die Lücken.", // TODO hochdeutsche?
+      question: (
+        <div>
+          Versuche die{" "}
+          <abbr
+            title="Fahre mit dem Mauszeiger über das Bild, um es zu vergrößern!"
+          >
+            Inschrift
+          </abbr>{" "}
+          ins Hochdeutsche zu übersetzen: fülle die Lücken.
+        </div>
+      ),
       choices: [
         'Hier hat',
         ['Christus', 'Christuslein', 'Ceilstus', 'Greiffus'],
